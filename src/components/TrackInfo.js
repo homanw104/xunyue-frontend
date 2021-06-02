@@ -1,71 +1,58 @@
 import React from 'react';
-import axios from 'axios';
+import axios from "axios";
+import defaultAlbumArtUrl from '../assets/logo.svg'
+import SpotifyApiUtil from "../util/SpotifyApiUtil";
+import {backendUrl} from '../config/config'
 
 class TrackInfo extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
+      img: defaultAlbumArtUrl,
+      trackId: this.props.trackId,
       trackName: 'TRACK NAME',
       artistName: 'ARTIST NAME'
     }
   }
 
   componentDidMount() {
-    const request = require('request'); // "Request" library
-    const config = require('../config/config'); // Get const variables
-
-    // Get Spotify API token.
-    const authOptions = {
-      url: 'https://accounts.spotify.com/api/token',
-      headers: {
-        'Authorization': 'Basic '
-          + (new Buffer(config.clientId + ':'
-            + config.clientSecret).toString('base64'))
-      },
-      form: {
-        grant_type: 'client_credentials'
-      },
-      json: true
+    // Get track info from backend.
+    let getTracksOptions = {
+      method: 'get',
+      url: backendUrl + '/tracks?id=' + this.state.trackId
     }
-
-    request.post(authOptions, function(error, response, body) {
-      console.error('error:', error);
-      console.log('statusCode:', response && response.statusCode);
-      console.log('body:', body);
-      if (!error && response.statusCode === 200) {
-        // TODO Get album cover.
-      } else {
-        // TODO Handle error.
-      }
-    });
-
-    const url = config.backendAPI + '/tracks/tracks?id=' + this.props.trackId;
-    axios.get(url)
-    .then((response) => {
-      console.log(response.data);
-      const name = response.data['data'][0]['name'];
-      const artists = (response.data['data'][0]['artists']).slice(2, -2).split('\', \'');
-      const artistListStr = artists.join(', ');
-      console.log(name);
-      console.log(artists)
+    axios(getTracksOptions).then((response) => {
+      let name = response.data['data']['name'];
+      let artists = (response.data['data']['artists']).slice(2, -2).split('\', \'');
+      let artistListStr = artists.join(', ');
       this.setState({
         trackName: name,
         artistName: artistListStr
       })
-    })
-    .catch(function (error) {
+    }).catch((error) => {
       console.log(error)
+      this.setState({
+        trackName: 'error',
+        artistName: 'error'
+      })
     })
+
+    // Get album art from spotify.
+    SpotifyApiUtil.getAlbumArtByTrackId(this.state.trackId).then((imgUrl) => {
+      this.setState({
+        img: imgUrl
+      })
+    });
+
   }
 
   render() {
-    let track = this.state;
-
     return(
       <div>
-        <h2>{track.trackName}</h2>
-        <h3>{track.artistName}</h3>
+        <img src={this.state.img} width='300px' alt='album art' />
+        <h2>{this.state.trackName}</h2>
+        <h3>{this.state.artistName}</h3>
       </div>
     )
   }
