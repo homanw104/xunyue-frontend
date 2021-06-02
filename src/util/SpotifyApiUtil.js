@@ -5,7 +5,7 @@
 
 import axios from 'axios';
 import qs from 'qs';
-import {clientId, clientSecret, spotifyUrl} from "../config/config";
+import { clientId, clientSecret, spotifyUrl } from "../config/config";
 
 class SpotifyApiUtil {
 
@@ -52,8 +52,8 @@ class SpotifyApiUtil {
 
   /**
    * Get album art URL from given tracks id.
-   * @param id Tracks ID.
-   * @returns {Promise} Album art URL
+   * @param id tracks ID.
+   * @returns {Promise} album art URL
    */
   static async getAlbumArtByTrackId(id) {
     // Get access_token.
