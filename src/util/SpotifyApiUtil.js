@@ -58,9 +58,11 @@ class SpotifyApiUtil {
   static async getAlbumArtByTrackId(id) {
     // Get access_token.
     let token = '';
-    SpotifyApiUtil.getToken().then((result) => {
-      token = result;
-    })
+    try {
+      token = await SpotifyApiUtil.getToken();
+    } catch (error) {
+      return error;
+    }
 
     // Config get request for tracks.
     let getOptions = {

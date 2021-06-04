@@ -1,13 +1,18 @@
 import './App.css';
-import TrackInfo from "./components/TrackInfo";
-import Header from "./components/Header";
+import HomePage from "./pages/HomePage";
+import TestPage from "./pages/TestPage";
+import SearchPage from "./pages/SearchPage";
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="app">
-      <Header />
-      <TrackInfo trackId={'1HXdv1z9RlvrcUernyf0MY'} />
-    </div>
+    <Router>
+      <div>
+        <Route exact path="/" component={HomePage} />
+        <Route exact path="/test" component={TestPage} />
+        <Route exact path="/search" component={SearchPage} />
+      </div>
+    </Router>
   );
 }
 
