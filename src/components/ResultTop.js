@@ -4,9 +4,9 @@ import defaultAlbumArtUrl from '../assets/logo.svg'
 import StringUtil from "../util/StringUtil";
 import SpotifyApiUtil from "../util/SpotifyApiUtil";
 import {backendUrl} from '../config/config'
-import {Card, Image} from 'semantic-ui-react'
+import {Card, Container, Image} from 'semantic-ui-react'
 
-class TrackInfo extends React.Component {
+class ResultTop extends React.Component {
 
   constructor(props) {
     super(props);
@@ -48,29 +48,35 @@ class TrackInfo extends React.Component {
       this.setState({
         img: imgUrl
       })
+    }).catch((error) => {
+      this.setState({
+        img: defaultAlbumArtUrl
+      })
     });
 
   }
 
   render() {
     return(
-      <Card>
-        <Image src={this.state.img} wrapped ui={false} />
-        <Card.Content>
-          <Card.Header>{this.state.trackName}</Card.Header>
-          <Card.Description>
-            {this.state.releaseDate} ∙ {this.state.duration}
-          </Card.Description>
-        </Card.Content>
-        <Card.Content extra>
-          <a href={'/artist/' + this.state.artistId}>
-            {this.state.artistName}
-          </a>
-        </Card.Content>
-      </Card>
+      <Container>
+        <Card fluid>
+          <Image src={this.state.img} wrapped ui={false} />
+          <Card.Content>
+            <Card.Header>{this.state.trackName}</Card.Header>
+            <Card.Description>
+              {this.state.releaseDate} ∙ {this.state.duration}
+            </Card.Description>
+          </Card.Content>
+          <Card.Content extra>
+            <a href={'/artist/' + this.state.artistId}>
+              {this.state.artistName}
+            </a>
+          </Card.Content>
+        </Card>
+      </Container>
     )
   }
 
 }
 
-export default TrackInfo;
+export default ResultTop;

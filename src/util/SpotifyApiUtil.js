@@ -46,14 +46,15 @@ class SpotifyApiUtil {
       this.#refreshThreshold = Date.now() + 300000;
       return response.data['access_token'];
     } catch(error) {
-      return error;
+      throw new Error(error.message);
     }
   }
 
   /**
    * Get album art URL from given tracks id.
    * @param id tracks ID.
-   * @returns {Promise} album art URL
+   * @returns {Promise} album art URL.
+   * @throws {Error} error from Spotify API.
    */
   static async getAlbumArtByTrackId(id) {
     // Get access_token.
@@ -61,7 +62,7 @@ class SpotifyApiUtil {
     try {
       token = await SpotifyApiUtil.getToken();
     } catch (error) {
-      return error;
+      throw new Error(error.message);
     }
 
     // Config get request for tracks.
@@ -78,7 +79,7 @@ class SpotifyApiUtil {
       let response = await axios(getOptions);
       return response.data['album']['images'][1]['url'];
     } catch(error) {
-      return error;
+      throw new Error(error.message);
     }
   }
 
