@@ -1,6 +1,7 @@
 import React from 'react';
-import defaultAlbumArtUrl from '../assets/logo.svg'
-import {Image, Item} from "semantic-ui-react";
+import { Image, Item } from "semantic-ui-react";
+
+import defaultAvatarUrl from '../assets/account_circle.svg'
 
 class ResultArtists extends React.Component {
 
@@ -8,7 +9,7 @@ class ResultArtists extends React.Component {
     return(
       <Item.Group divided>
         <Item>
-          <Item.Image src={defaultAlbumArtUrl} />
+          <Item.Image src={defaultAvatarUrl} />
           <Item.Content>
             <Item.Header as='a'>Content Header</Item.Header>
             <Item.Meta>
@@ -19,7 +20,7 @@ class ResultArtists extends React.Component {
               A description which may flow for several lines and give context to the content.
             </Item.Description>
             <Item.Extra>
-              <Image avatar circular src={defaultAlbumArtUrl} />
+              <Image avatar circular src={defaultAvatarUrl} />
               Username
             </Item.Extra>
           </Item.Content>

@@ -1,6 +1,7 @@
 import React from 'react';
-import defaultAlbumArtUrl from '../assets/logo.svg'
-import {Grid, Image} from "semantic-ui-react";
+import { Grid, Image } from "semantic-ui-react";
+
+import defaultAlbumArtUrl from '../assets/album.svg'
 
 class ResultSongs extends React.Component {
 

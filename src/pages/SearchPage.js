@@ -1,70 +1,85 @@
 import React from 'react';
-import {Container, Grid, Header} from "semantic-ui-react";
+import { Container, Grid, Header } from "semantic-ui-react";
+
+import MenuBar from "../components/MenuBar";
 import ResultTop from "../components/ResultTop";
 import ResultSongs from "../components/ResultSongs";
 import ResultArtists from "../components/ResultArtists";
-import MenuBar from "../components/MenuBar";
-import TopSearchPage from './TopSearchPage'
-import { Link } from 'react-router-dom'
+import TopSearches from '../components/TopSearches'
+import BackendApiUtil from "../util/BackendApiUtil";
 
 const mainContainerStyle = {
-  'margin-top': '6em'
+  marginTop: '6em'
 }
 
 class SearchPage extends React.Component {
 
   constructor(props) {
     super(props);
+
+    // Parse query string from URL.
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const param = urlParams.get('q');
+
+    // If no query string found from URL, return home.
+    if (param === null) {
+      window.location.href = '../';
+    }
+
+    // Set query string in component's state.
     this.state = {
-      query: ''
+      query: param, /* Currently querying string */
+      data: null    /* Search result data */
     }
   }
 
-  handleSearchSubmit = () => {
-    console.log('search:', this.state.query);
+  componentDidMount() {
+    // Get search results from backend.
+    BackendApiUtil.getSearchData(this.state.query).then((response) => {
+      this.setState({
+        data: response
+      })
+    }).catch((error) => {
+      console.log(error);
+    });
   }
 
   render() {
     return(
       <div>
-        <MenuBar />
+        <MenuBar query={this.state.query}/>
 
         <Container style={mainContainerStyle}>
-          <Grid columns={16}>
+          <Grid columns={16} stackable>
 
             <Grid.Row>
-              <Grid.Column width={6}>
+              <Grid.Column width={5}>
                 <Header as='h1' dividing>Top Results</Header>
-                <ResultTop trackId={'1HXdv1z9RlvrcUernyf0MY'}/>
+                <ResultTop data={this.state.data} trackId={'00RiMSj1Voh0LaOfLgj95N'}/>
               </Grid.Column>
-              <Grid.Column width={10}>
+              <Grid.Column width={11}>
                 <Header as='h1' dividing>Songs</Header>
-                <ResultSongs />
+                <ResultSongs data={this.state.data}/>
               </Grid.Column>
             </Grid.Row>
 
             <Grid.Row>
               <Grid.Column width={16}>
                 <Header as='h1' dividing>Artists</Header>
-                <ResultArtists />
+                <ResultArtists data={this.state.data}/>
               </Grid.Column>
             </Grid.Row>
 
             <Grid.Row>
               <Grid.Column width={16}>
                 <Header as='h1' dividing>Top Search</Header>
-                <TopSearchPage />
+                <TopSearches />
               </Grid.Column>
             </Grid.Row>
 
           </Grid>
         </Container>
-        <Link to="/addArtist">
-          <button className="ui icon button">
-            <i aria-hidden="true" className="search icon">
-            </i>
-          </button>
-        </Link>
 
       </div>
     )

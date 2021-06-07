@@ -1,10 +1,10 @@
 import React from 'react';
-import axios from "axios";
-import defaultAlbumArtUrl from '../assets/logo.svg'
+import { Card, Container, Image } from 'semantic-ui-react'
+
 import StringUtil from "../util/StringUtil";
 import SpotifyApiUtil from "../util/SpotifyApiUtil";
-import {backendUrl} from '../config/config'
-import {Card, Image} from 'semantic-ui-react'
+import BackendApiUtil from "../util/BackendApiUtil";
+import defaultAlbumArtUrl from '../assets/logo.svg'
 
 class TrackInfo extends React.Component {
 
@@ -13,23 +13,20 @@ class TrackInfo extends React.Component {
     this.state = {
       img: defaultAlbumArtUrl,
       trackId: this.props.trackId,
-      trackName: 'Track',
+      trackName: 'Unknown Track',
       artistId: null,
       artistName: 'Artist',
       explicit: 0,
       duration: '0 min 0 sec',
-      releaseDate: '2020',
+      releaseDate: 'Unknown',
       popularity: 0
     }
   }
 
   componentDidMount() {
     // Get track info from backend.
-    let getTracksOptions = {
-      method: 'get',
-      url: backendUrl + '/tracks?id=' + this.state.trackId
-    }
-    axios(getTracksOptions).then((response) => {
+    BackendApiUtil.getTracksData(this.state.trackId).then((response) => {
+      console.log(response);
       this.setState({
         trackName: response.data['data']['name'],
         artistId: (response.data['data']['id_artists']).slice(2, -2).split('\', \'').join(', '),
@@ -40,7 +37,7 @@ class TrackInfo extends React.Component {
         popularity: response.data['data']['popularity']
       })
     }).catch((error) => {
-      console.log(error)
+      console.log(error);
     })
 
     // Get album art from spotify.
@@ -48,26 +45,29 @@ class TrackInfo extends React.Component {
       this.setState({
         img: imgUrl
       })
+    }).catch((error) => {
+      console.log(error);
     });
-
   }
 
   render() {
     return(
-      <Card>
-        <Image src={this.state.img} wrapped ui={false} />
-        <Card.Content>
-          <Card.Header>{this.state.trackName}</Card.Header>
-          <Card.Description>
-            {this.state.releaseDate} ∙ {this.state.duration}
-          </Card.Description>
-        </Card.Content>
-        <Card.Content extra>
-          <a href={'/artist/' + this.state.artistId}>
-            {this.state.artistName}
-          </a>
-        </Card.Content>
-      </Card>
+      <Container>
+        <Card fluid>
+          <Image src={this.state.img} wrapped ui={false} />
+          <Card.Content>
+            <Card.Header>{this.state.trackName}</Card.Header>
+            <Card.Description>
+              {this.state.releaseDate} ∙ {this.state.duration}
+            </Card.Description>
+          </Card.Content>
+          <Card.Content extra>
+            <a href={'/artist/' + this.state.artistId}>
+              {this.state.artistName}
+            </a>
+          </Card.Content>
+        </Card>
+      </Container>
     )
   }
 

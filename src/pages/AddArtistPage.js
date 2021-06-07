@@ -1,6 +1,5 @@
-import React, { Component } from 'react'
-import { Button, Dimmer, Header, Image, Container, Form, Message, Grid } from 'semantic-ui-react'
-import HomePage from './HomePage'
+import React from 'react'
+import { Button, Dimmer, Header, Image, Container, Form } from 'semantic-ui-react'
 
 class AddArtistPage extends React.Component {
 

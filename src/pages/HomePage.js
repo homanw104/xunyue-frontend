@@ -1,34 +1,56 @@
 import React from 'react'
-import { Grid, Segment, Input, Header, Container ,Button} from 'semantic-ui-react'
-import { Link } from 'react-router-dom'
-import TopSearchPage from './TopSearchPage'
+import { Grid, Header, Container, Form } from 'semantic-ui-react'
 
 class HomePage extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      query: ''
+    }
+  }
+
+  handleSearchSubmit = () => {
+    if (this.state.query !== '') {
+      window.location.href = './search?q=' + this.state.query;
+    } else {
+      /* Do nothing. */
+    }
+  }
+
+  handleInputChange = (e) => {
+    this.setState({
+      query: e.target.value,
+    });
+  }
+
   render () {
     return (
-      <Grid>
+      <Container>
+        <Grid columns={16}>
 
-        <Container style={{ marginTop: '3em' }}>
-          <Header as='h1' textAlign="center" style={{ marginTop: '4em', fontSize: '45px' }}>寻乐</Header>
-        </Container>
+          <Grid.Row centered>
+            <Grid.Column width={6}>
+              <Header as='h1' textAlign="center" style={{ marginTop: '4em', fontSize: '45px' }}>寻乐</Header>
+            </Grid.Column>
+          </Grid.Row>
 
+          <Grid.Row centered>
+            <Grid.Column width={6}>
+              <Form onSubmit={this.handleSearchSubmit}>
+                <Form.Input
+                  icon='search'
+                  size='large'
+                  placeholder='Search artists and songs'
+                  value={this.state.query}
+                  onChange={this.handleInputChange}
+                />
+              </Form>
+            </Grid.Column>
+          </Grid.Row>
 
-        <div className="ui action input" style={{marginLeft:'530px',marginTop:'2em'}}>
-          <input type="text" placeholder="Search tracks / artists..."/>
-          <Link to="/search">
-            <button className="ui icon button">
-              <i aria-hidden="true" className="search icon">
-              </i>
-            </button>
-          </Link>
-        </div>
-
-
-
-
-
-      </Grid>
+        </Grid>
+      </Container>
     )
   }
 }

@@ -1,9 +1,8 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import defaultAlbumArtUrl from '../assets/logo.svg'
-import { Button, Container, Divider, Grid, Header, Image, Menu, Segment } from 'semantic-ui-react'
+import defaultAlbumArtUrl from '../assets/album.svg'
+import { Container } from 'semantic-ui-react'
 
-class TopSearchPage extends React.Component {
+class TopSearches extends React.Component {
 
   constructor(props) {
     super(props);
@@ -15,10 +14,7 @@ class TopSearchPage extends React.Component {
   render () {
     return (
       <div>
-        <Container style={{ marginTop: '3em' }}>
-          <Header as='h1' dividing>热门搜索</Header>
-        </Container>
-        <Container style={{ marginLeft:'3em',marginTop:'3em'}}>
+        <Container>
 
         <div className="ui divided three column grid">
           <div className="row" style={{marginTop:'3em'}}>
@@ -72,4 +68,4 @@ class TopSearchPage extends React.Component {
   }
 }
 
-export default TopSearchPage
+export default TopSearches

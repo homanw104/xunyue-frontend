@@ -1,28 +1,26 @@
 import React from 'react';
-import {Container, Form, Input, Menu} from 'semantic-ui-react'
+import { Container, Form, Menu } from 'semantic-ui-react'
 
 class MenuBar extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      query: ''
+      query: this.props.query
     }
   }
 
   handleHomeClick = (e, { name }) => {
-    this.setState({ activeItem: name })
+    window.location.href = '../';
   }
 
-  handleSearchSubmit = (e) => {
-    this.setState({
-      query: e.target.value
-    });
+  handleSearchSubmit = () => {
+    window.location.href = '../search?q=' + this.state.query;
   }
 
   handleInputChange = (e) => {
     this.setState({
-      query: e.target.value
+      query: e.target.value,
     });
   }
 
@@ -36,14 +34,13 @@ class MenuBar extends React.Component {
           </Menu.Item>
           <Menu.Item>
             <Form onSubmit={this.handleSearchSubmit}>
-              <Input icon='search' placeholder='Search...' />
-              {/*<Form.Input*/}
-              {/*  size='large'*/}
-              {/*  action={{ type: 'submit', content: 'Go' }}*/}
-              {/*  placeholder='Search...'*/}
-              {/*  value={this.state.query}*/}
-              {/*  onChange={this.handleInputChange}*/}
-              {/*/>*/}
+              <Form.Input
+                icon='search'
+                size='large'
+                placeholder='Search artists and songs'
+                value={this.state.query}
+                onChange={this.handleInputChange}
+              />
             </Form>
           </Menu.Item>
 

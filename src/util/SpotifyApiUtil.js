@@ -5,21 +5,27 @@
 
 import axios from 'axios';
 import qs from 'qs';
-import { clientId, clientSecret, spotifyUrl } from "../config/config";
+
+const clientId = 'a15c4180082644fb8f3ab9d22827210c';      /* Spotify Client ID */
+const clientSecret = 'd5619053cbdf43b88352be0a7c678163';  /* Spotify Client Secret */
+const spotifyApi = 'https://api.spotify.com';             /* Spotify API address */
+const spotifyAccountApi = 'https://accounts.spotify.com'  /* Spotify account API for getting tokens */
 
 class SpotifyApiUtil {
 
   /**
    * Self-defined expiration time of access_token. Private property.
+   * Spotify specify that access_tokens are expired every 3600 seconds.
    */
   static #refreshThreshold = (Date.now() + 300000);
 
   /**
    * Get Spotify access_token, renew if necessary.
    * @returns {Promise} Spotify access_token.
+   * @throws Error error from Spotify API.
    */
   static async getToken() {
-    // Return if the current access_token stored is valid.
+    // Return access_token if the current one stored is valid.
     if (this.#refreshThreshold < Date.now()) {
       return new Promise((resolve) => {
         resolve(sessionStorage.getItem('access_token'));
@@ -29,7 +35,7 @@ class SpotifyApiUtil {
     // Config post request for token renewal.
     const authOptions = {
       method: 'post',
-      url: 'https://accounts.spotify.com/api/token',
+      url: spotifyAccountApi + '/api/token',
       auth: {
         username: clientId,
         password: clientSecret
@@ -51,8 +57,8 @@ class SpotifyApiUtil {
   }
 
   /**
-   * Get album art URL from given tracks id.
-   * @param id tracks ID.
+   * Get album art URL, given track's id.
+   * @param id track's ID.
    * @returns {Promise} album art URL.
    * @throws {Error} error from Spotify API.
    */
@@ -68,7 +74,7 @@ class SpotifyApiUtil {
     // Config get request for tracks.
     let getOptions = {
       method: 'get',
-      url: spotifyUrl + '/v1/tracks/' + id,
+      url: spotifyApi + '/v1/tracks/' + id,
       headers: {
         'Authorization': 'Bearer ' + token
       }
