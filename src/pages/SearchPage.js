@@ -4,6 +4,8 @@ import ResultTop from "../components/ResultTop";
 import ResultSongs from "../components/ResultSongs";
 import ResultArtists from "../components/ResultArtists";
 import MenuBar from "../components/MenuBar";
+import TopSearchPage from './TopSearchPage'
+import { Link } from 'react-router-dom'
 
 const mainContainerStyle = {
   'margin-top': '6em'
@@ -48,8 +50,21 @@ class SearchPage extends React.Component {
               </Grid.Column>
             </Grid.Row>
 
+            <Grid.Row>
+              <Grid.Column width={16}>
+                <Header as='h1' dividing>Top Search</Header>
+                <TopSearchPage />
+              </Grid.Column>
+            </Grid.Row>
+
           </Grid>
         </Container>
+        <Link to="/addArtist">
+          <button className="ui icon button">
+            <i aria-hidden="true" className="search icon">
+            </i>
+          </button>
+        </Link>
 
       </div>
     )
