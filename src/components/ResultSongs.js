@@ -1,5 +1,6 @@
-import React from 'react';
-import { Grid, Image } from "semantic-ui-react";
+import React from 'react'
+import { Grid, Image } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
 
 import defaultAlbumArtUrl from '../assets/album.svg'
 
@@ -16,9 +17,13 @@ class ResultSongs extends React.Component {
     return(
       <Grid columns={2}>
         <Grid.Row>
+
           <Grid.Column>
-            <Image src={this.state.img} />
+            <Link to="/trackSearch">
+              <Image src={this.state.img}/>
+            </Link>
           </Grid.Column>
+
           <Grid.Column>
             <Image src={this.state.img} />
           </Grid.Column>
