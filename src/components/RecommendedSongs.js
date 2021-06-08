@@ -1,5 +1,5 @@
 import React from 'react'
-import { Header, Image, List } from 'semantic-ui-react'
+import { Image, List } from 'semantic-ui-react'
 import defaultAlbumArtUrl from '../assets/logo.svg'
 
 class RecommendedSongs extends React.Component {

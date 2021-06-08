@@ -5,8 +5,9 @@ import MenuBar from "../components/MenuBar";
 import ResultTop from "../components/ResultTop";
 import ResultSongs from "../components/ResultSongs";
 import ResultArtists from "../components/ResultArtists";
-import TopSearches from '../components/TopSearches'
+import TopSearches from '../components/TopSearches';
 import BackendApiUtil from "../util/BackendApiUtil";
+import Footer from "../components/Footer";
 
 const mainContainerStyle = {
   marginTop: '6em'
@@ -27,61 +28,77 @@ class SearchPage extends React.Component {
       window.location.href = '../';
     }
 
-    // Set query string in component's state.
+    // Set query string and component data in state.
     this.state = {
-      query: param, /* Currently querying string */
-      data: null    /* Search result data */
+      loading: true,    /* Indicates whether data is still fetching */
+      query: param,     /* Currently querying string */
+      topData: null,    /* Top result data */
+      tracksData: null, /* Tracks result data */
+      artistsData: null /* Artists result data */
     }
   }
 
   componentDidMount() {
     // Get search results from backend.
     BackendApiUtil.getSearchData(this.state.query).then((response) => {
-      this.setState({
-        data: response
-      })
+      if (response.data['code'] === 200) {
+        console.log('test: ' + response.data['data']['top']);
+        this.setState({
+          loading: false,
+          topData: response.data['data']['top'],
+          tracksData: response.data['data']['tracks'],
+          artistsData: response.data['data']['artists']
+        });
+      } else if (response.data['code'] === 404) {
+        this.setState({
+          loading: false,
+          topData: null,
+          tracksData: null,
+          artistsData: null
+        });
+      }
     }).catch((error) => {
-      console.log(error);
+      // TODO Show error.
+      console.log('Error in getSearchData: ' + error);
     });
   }
 
   render() {
     return(
-      <div>
+      <Container>
         <MenuBar query={this.state.query}/>
-
         <Container style={mainContainerStyle}>
           <Grid columns={16} stackable>
 
-            <Grid.Row>
+            <Grid.Row stretched>
               <Grid.Column width={5}>
-                <Header as='h1' dividing>Top Results</Header>
-                <ResultTop data={this.state.data} trackId={'00RiMSj1Voh0LaOfLgj95N'}/>
+                <Header as='h1' dividing>Top Result</Header>
+                <ResultTop data={this.state.topData} loading={this.state.loading} />
               </Grid.Column>
-              <Grid.Column width={11}>
+              <Grid.Column width={10} floated='right'>
                 <Header as='h1' dividing>Songs</Header>
-                <ResultSongs data={this.state.data}/>
+                <ResultSongs data={this.state.tracksData} loading={this.state.loading} />
               </Grid.Column>
             </Grid.Row>
 
             <Grid.Row>
               <Grid.Column width={16}>
                 <Header as='h1' dividing>Artists</Header>
-                <ResultArtists data={this.state.data}/>
+                <ResultArtists data={this.state.artistsData} loading={this.state.loading} />
               </Grid.Column>
             </Grid.Row>
 
             <Grid.Row>
               <Grid.Column width={16}>
-                <Header as='h1' dividing>Top Search</Header>
+                <Header as='h1' dividing>Top Searches</Header>
                 <TopSearches />
               </Grid.Column>
             </Grid.Row>
 
           </Grid>
         </Container>
-
-      </div>
+        <Footer />
+      </Container>
     )
   }
 }

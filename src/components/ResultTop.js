@@ -1,53 +1,85 @@
 import React from 'react';
-import { Card, Container, Image } from 'semantic-ui-react'
+import { Card, Container, Image } from 'semantic-ui-react';
 
 import StringUtil from "../util/StringUtil";
 import SpotifyApiUtil from "../util/SpotifyApiUtil";
-import BackendApiUtil from "../util/BackendApiUtil";
-import defaultAlbumArtUrl from '../assets/album.svg'
+import defaultAlbumArtUrl from '../assets/album.svg';
 
 class ResultTop extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
+      loading: this.props.loading,
+      type: 'artists',
       img: defaultAlbumArtUrl,
-      trackId: this.props.trackId,
-      trackName: 'Unknown Track',
-      artistId: null,
-      artistName: 'Artist',
-      explicit: 0,
-      duration: '0 min 0 sec',
-      releaseDate: 'Unknown',
+      id: null,
+      name: 'Loading...',
+      desc: 'loading...',
+      extra: 'loading...',
       popularity: 0
     }
   }
 
-  componentDidMount() {
-    // Get track info from backend.
-    BackendApiUtil.getTracksData(this.state.trackId).then((response) => {
-      console.log(response);
-      this.setState({
-        trackName: response.data['data']['name'],
-        artistId: (response.data['data']['id_artists']).slice(2, -2).split('\', \'').join(', '),
-        artistName: (response.data['data']['artists']).slice(2, -2).split('\', \'').join(', '),
-        explicit: response.data['data']['explicit'],
-        duration: StringUtil.msToString(response.data['data']['duration_ms']),
-        releaseDate: response.data['data']['release_date'],
-        popularity: response.data['data']['popularity']
-      })
-    }).catch((error) => {
-      console.log(error);
-    })
+  componentWillReceiveProps(nextProps) {
+    let data = nextProps.data;
+    if (data !== null) {
+      if (data['type'] === 'artists') {
 
-    // Get album art from spotify.
-    SpotifyApiUtil.getAlbumArtByTrackId(this.state.trackId).then((imgUrl) => {
+        // When top result is an artist.
+        this.setState({
+          type: 'artists',                                                /* Result type */
+          img: defaultAlbumArtUrl,                                        /* Artist avatar */
+          id: data['data']['id'],                                         /* Artist ID */
+          name: data['data']['name'],                                     /* Artist name */
+          desc: StringUtil.followersToString(data['data']['followers']),  /* Followers string */
+          extra: StringUtil.genresToString(data['data']['genres']),       /* Genres list */
+          popularity: data['data']['popularity']                          /* Artist popularity */
+        });
+        // Get artist avatar from Spotify.
+        SpotifyApiUtil.getAvatarByArtistId(data['data']['id']).then((imgUrl) => {
+          this.setState({
+            img: imgUrl
+          })
+        }).catch((error) => {
+          console.log('Error in getAvatarByArtistId: ' + error);
+        });
+
+      } else {
+
+        // When top result is a track.
+        this.setState({
+          type: 'tracks',                                                /* Result type */
+          img: defaultAlbumArtUrl,                                       /* Album cover */
+          id: data['data']['id'],                                        /* Track ID */
+          name: data['data']['name'],                                    /* Track Name */
+          desc: data['data']['release_date'] + ' ∙ '                     /* Release date */
+            + StringUtil.msToString(data['data']['duration_ms']),        /* Duration string */
+          extra: StringUtil.artistsToString(data['data']['artists']),    /* Artists list */
+          popularity: 0
+        });
+        // Get album art from Spotify.
+        SpotifyApiUtil.getAlbumArtByTrackId(data['data']['id']).then((imgUrl) => {
+          this.setState({
+            img: imgUrl
+          })
+        }).catch((error) => {
+          console.log('Error in getAlbumArtByTrackId: ' + error);
+        });
+
+      }
+    } else {
       this.setState({
-        img: imgUrl
-      })
-    }).catch((error) => {
-      console.log(error);
-    });
+        loading: this.props.loading,
+        type: 'artists',
+        img: defaultAlbumArtUrl,
+        id: null,
+        name: 'No result',
+        desc: 'no result',
+        extra: '/(ㄒoㄒ)/~~',
+        popularity: 0
+      });
+    }
   }
 
   render() {
@@ -56,15 +88,13 @@ class ResultTop extends React.Component {
         <Card fluid>
           <Image src={this.state.img} wrapped ui={false} />
           <Card.Content>
-            <Card.Header>{this.state.trackName}</Card.Header>
+            <Card.Header>{this.state.name}</Card.Header>
             <Card.Description>
-              {this.state.releaseDate} ∙ {this.state.duration}
+              {this.state.desc}
             </Card.Description>
           </Card.Content>
           <Card.Content extra>
-            <a href={'/artist/' + this.state.artistId}>
-              {this.state.artistName}
-            </a>
+            {this.state.extra}
           </Card.Content>
         </Card>
       </Container>

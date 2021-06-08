@@ -1,5 +1,6 @@
 /**
- * @file Backend API utilities.
+ * @file Backend API utilities. For documents on returned json format,
+ * please refer to backend repository: <https://github.com/homanw104/xunyue-backend>
  * @author Homan Wong
  */
 

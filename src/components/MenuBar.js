@@ -10,7 +10,7 @@ class MenuBar extends React.Component {
     }
   }
 
-  handleHomeClick = (e, { name }) => {
+  handleHomeClick = () => {
     window.location.href = '../';
   }
 

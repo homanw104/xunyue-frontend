@@ -1,6 +1,6 @@
 import React from 'react'
-import { Grid, Image } from 'semantic-ui-react'
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
+import { Grid, Header, Image } from 'semantic-ui-react'
 
 import defaultAlbumArtUrl from '../assets/album.svg'
 
@@ -15,37 +15,133 @@ class ResultSongs extends React.Component {
   
   render() {
     return(
-      <Grid columns={2}>
-        <Grid.Row>
+      <Grid columns={2} style={{height: '100%'}}>
 
+        <Grid.Row>
           <Grid.Column>
             <Link to="/trackSearch">
-              <Image src={this.state.img}/>
+              <Header as='h4' image>
+                <Image src={this.state.img}/>
+                <Header.Content>
+                  Duplicate Song
+                  <Header.Subheader>Related Information</Header.Subheader>
+                </Header.Content>
+              </Header>
             </Link>
           </Grid.Column>
-
           <Grid.Column>
-            <Image src={this.state.img} />
+            <Link to="/trackSearch">
+              <Header as='h4' image>
+                <Image src={this.state.img}/>
+                <Header.Content>
+                  Duplicate Song
+                  <Header.Subheader>Related Information</Header.Subheader>
+                </Header.Content>
+              </Header>
+            </Link>
           </Grid.Column>
         </Grid.Row>
 
         <Grid.Row>
           <Grid.Column>
-            <Image src={this.state.img} />
+            <Link to="/trackSearch">
+              <Header as='h4' image>
+                <Image src={this.state.img}/>
+                <Header.Content>
+                  Duplicate Song
+                  <Header.Subheader>Related Information</Header.Subheader>
+                </Header.Content>
+              </Header>
+            </Link>
           </Grid.Column>
           <Grid.Column>
-            <Image src={this.state.img} />
+            <Link to="/trackSearch">
+              <Header as='h4' image>
+                <Image src={this.state.img}/>
+                <Header.Content>
+                  Duplicate Song
+                  <Header.Subheader>Related Information</Header.Subheader>
+                </Header.Content>
+              </Header>
+            </Link>
           </Grid.Column>
         </Grid.Row>
 
         <Grid.Row>
           <Grid.Column>
-            <Image src={this.state.img} />
+            <Link to="/trackSearch">
+              <Header as='h4' image>
+                <Image src={this.state.img}/>
+                <Header.Content>
+                  Duplicate Song
+                  <Header.Subheader>Related Information</Header.Subheader>
+                </Header.Content>
+              </Header>
+            </Link>
           </Grid.Column>
           <Grid.Column>
-            <Image src={this.state.img} />
+            <Link to="/trackSearch">
+              <Header as='h4' image>
+                <Image src={this.state.img}/>
+                <Header.Content>
+                  Duplicate Song
+                  <Header.Subheader>Related Information</Header.Subheader>
+                </Header.Content>
+              </Header>
+            </Link>
           </Grid.Column>
         </Grid.Row>
+
+        <Grid.Row>
+          <Grid.Column>
+            <Link to="/trackSearch">
+              <Header as='h4' image>
+                <Image src={this.state.img}/>
+                <Header.Content>
+                  Duplicate Song
+                  <Header.Subheader>Related Information</Header.Subheader>
+                </Header.Content>
+              </Header>
+            </Link>
+          </Grid.Column>
+          <Grid.Column>
+            <Link to="/trackSearch">
+              <Header as='h4' image>
+                <Image src={this.state.img}/>
+                <Header.Content>
+                  Duplicate Song
+                  <Header.Subheader>Related Information</Header.Subheader>
+                </Header.Content>
+              </Header>
+            </Link>
+          </Grid.Column>
+        </Grid.Row>
+
+        <Grid.Row>
+          <Grid.Column>
+            <Link to="/trackSearch">
+              <Header as='h4' image>
+                <Image src={this.state.img}/>
+                <Header.Content>
+                  Duplicate Song
+                  <Header.Subheader>Related Information</Header.Subheader>
+                </Header.Content>
+              </Header>
+            </Link>
+          </Grid.Column>
+          <Grid.Column>
+            <Link to="/trackSearch">
+              <Header as='h4' image>
+                <Image src={this.state.img}/>
+                <Header.Content>
+                  Duplicate Song
+                  <Header.Subheader>Related Information</Header.Subheader>
+                </Header.Content>
+              </Header>
+            </Link>
+          </Grid.Column>
+        </Grid.Row>
+
       </Grid>
     )
   }

@@ -89,6 +89,39 @@ class SpotifyApiUtil {
     }
   }
 
+  /**
+   * Get artist avatar URL, given artist's id.
+   * @param id artist's ID.
+   * @returns {Promise} album art URL.
+   * @throws {Error} error from Spotify API.
+   */
+  static async getAvatarByArtistId(id) {
+    // Get access_token.
+    let token = '';
+    try {
+      token = await SpotifyApiUtil.getToken();
+    } catch (error) {
+      throw new Error(error.message);
+    }
+
+    // Config get request for tracks.
+    let getOptions = {
+      method: 'get',
+      url: spotifyApi + '/v1/artists/' + id,
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    }
+
+    // Send get request to Spotify API.
+    try {
+      let response = await axios(getOptions);
+      return response.data['images'][1]['url'];
+    } catch(error) {
+      throw new Error(error.message);
+    }
+  }
+
 }
 
 export default SpotifyApiUtil;

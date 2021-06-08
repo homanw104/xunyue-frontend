@@ -2,6 +2,10 @@
 
 Xun Yue, a music discovery app. This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Install Dependencies
+
+Before running, run `npm install` in the project's root directory to download all required dependencies.
+
 ## Available Scripts
 
 In the project directory, you can run:

@@ -1,10 +1,6 @@
 import React from 'react'
 import defaultAlbumArtUrl from '../assets/logo.svg'
-import { Container, Grid, Header, Image, Table } from 'semantic-ui-react'
-import { Link } from 'react-router-dom'
-import MenuBar from './MenuBar'
-import ResultTop from './ResultTop'
-import ResultArtists from './ResultArtists'
+import { Header, Image, Table } from 'semantic-ui-react'
 
 class DuplicateSongs extends React.Component {
 
