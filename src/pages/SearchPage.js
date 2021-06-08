@@ -5,7 +5,6 @@ import MenuBar from "../components/MenuBar";
 import ResultTop from "../components/ResultTop";
 import ResultSongs from "../components/ResultSongs";
 import ResultArtists from "../components/ResultArtists";
-import TopSearches from '../components/TopSearches';
 import BackendApiUtil from "../util/BackendApiUtil";
 import Footer from "../components/Footer";
 
@@ -86,7 +85,7 @@ class SearchPage extends React.Component {
             <Grid.Row>
               <Grid.Column width={5}>
                 <Header as='h1' dividing>Top Result</Header>
-                <ResultTop data={this.state.topData} loading={this.state.loading} />
+                <ResultTop query={this.state.query} data={this.state.topData} loading={this.state.loading} />
               </Grid.Column>
               <Grid.Column width={10} floated='right'>
                 <Header as='h1' dividing>Songs</Header>
@@ -97,14 +96,7 @@ class SearchPage extends React.Component {
             <Grid.Row>
               <Grid.Column width={16}>
                 <Header as='h1' dividing>Artists</Header>
-                <ResultArtists data={this.state.artistsData} loading={this.state.loading} />
-              </Grid.Column>
-            </Grid.Row>
-
-            <Grid.Row>
-              <Grid.Column width={16}>
-                <Header as='h1' dividing>Top Searches</Header>
-                <TopSearches />
+                <ResultArtists query={this.state.query} data={this.state.artistsData} loading={this.state.loading} />
               </Grid.Column>
             </Grid.Row>
 

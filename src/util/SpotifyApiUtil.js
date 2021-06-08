@@ -57,7 +57,7 @@ class SpotifyApiUtil {
   }
 
   /**
-   * Get album art URL, given track's id.
+   * Get album art URL, given track's ID.
    * @param id track's ID.
    * @returns {Promise} album art URL.
    * @throws {Error} error from Spotify API.
@@ -90,7 +90,7 @@ class SpotifyApiUtil {
   }
 
   /**
-   * Get artist avatar URL, given artist's id.
+   * Get artist avatar URL, given artist's ID.
    * @param id artist's ID.
    * @returns {Promise} album art URL.
    * @throws {Error} error from Spotify API.
@@ -117,6 +117,73 @@ class SpotifyApiUtil {
     try {
       let response = await axios(getOptions);
       return response.data['images'][1]['url'];
+    } catch(error) {
+      throw new Error(error.message);
+    }
+  }
+
+  /**
+   * Get album art URLs, given tracks' ID.
+   * @param idList track ID list.
+   * @returns {Promise} album art URL list.
+   * @throws {Error} error from Spotify API.
+   */
+  static async getAlbumArtListByArtistId(idList) {
+    // Get access_token.
+    let token = '';
+    try {
+      token = await SpotifyApiUtil.getToken();
+    } catch (error) {
+      throw new Error(error.message);
+    }
+
+    // Config get request for tracks.
+    let getOptions = {
+      method: 'get',
+      url: spotifyApi + '/v1/tracks?ids=' + idList.toString(),
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    }
+
+    // Send get request to Spotify API.
+    try {
+      let response = await axios(getOptions);
+      return response.data['tracks'].map(a => a['album']['images'][1]['url']);
+    } catch(error) {
+      throw new Error(error.message);
+    }
+  }
+
+  /**
+   * Get artist avatar URLs, given artists' ID.
+   * @param idList artist ID list.
+   * @returns {Promise} artist avatar URL list.
+   * @throws {Error} error from Spotify API.
+   */
+  static async getAvatarListByArtistId(idList) {
+    // Get access_token.
+    let token = '';
+    try {
+      token = await SpotifyApiUtil.getToken();
+    } catch (error) {
+      throw new Error(error.message);
+    }
+
+    // Config get request for tracks.
+    let getOptions = {
+      method: 'get',
+      url: spotifyApi + '/v1/artists?ids=' + idList.toString(),
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    }
+
+    // Send get request to Spotify API.
+    try {
+      let response = await axios(getOptions);
+      console.log(response.data);
+      return response.data['artists'].map(a => a['images'][1]['url']);
     } catch(error) {
       throw new Error(error.message);
     }
