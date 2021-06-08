@@ -38,6 +38,20 @@ class SearchPage extends React.Component {
     }
   }
 
+  handleSearchSubmit = () => {
+    if (this.state.query !== '') {
+      window.location.href = './tracks/search?q=' + this.state.query;
+    } else {
+      /* Do nothing. */
+    }
+  }
+
+  handleInputChange = (e) => {
+    this.setState({
+      query: e.target.value,
+    });
+  }
+
   componentDidMount() {
     // Get search results from backend.
     BackendApiUtil.getSearchData(this.state.query).then((response) => {

@@ -65,6 +65,24 @@ class BackendApiUtil {
     }
   }
 
+  /**
+   * Return Promise of search results from backend API.
+   * @param query artist's name
+   * @return {Promise} artists list result data object.
+   * @throws Error error from backend API.
+   */
+  static async getTracksList(query) {
+    let getOptions = {
+      method: 'get',
+      url: backendUrl + '/tracks/search?name=' + query
+    }
+    try {
+      return axios(getOptions);
+    } catch(error) {
+      throw new Error(error.message);
+    }
+  }
+
 }
 
 export default BackendApiUtil;

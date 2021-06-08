@@ -11,9 +11,9 @@ class StringUtil {
    * @return {string} formatted string.
    */
   static msToString(ms) {
-    let hours = Math.round(ms / (1000 * 60 * 60));
-    let minutes = Math.round((ms % (1000 * 60 * 60)) / (1000 * 60));
-    let seconds = Math.round((ms % (1000 * 60)) / 1000);
+    let hours = Math.floor(ms / (1000 * 60 * 60));
+    let minutes = Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60));
+    let seconds = Math.floor((ms % (1000 * 60)) / 1000);
     return ((hours === 0) ? ('') : (hours.toString() + ' hr '))
       + ((minutes === 0) ? ('') : (minutes.toString() + ' min '))
       + (seconds.toString() + ' sec');

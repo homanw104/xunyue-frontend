@@ -1,11 +1,10 @@
 import React from 'react'
 import { Container, Grid, Header } from 'semantic-ui-react'
-import ResultTop from '../components/ResultTop'
 import MenuBar from '../components/MenuBar'
 import { Link } from 'react-router-dom'
-import defaultAlbumArtUrl from '../assets/logo.svg'
-import DuplicateSongs from '../components/DuplicateSongs'
 import RecommendedSongs from '../components/RecommendedSongs'
+import TrackInfo from '../components/TrackInfo'
+import BackendApiUtil from '../util/BackendApiUtil'
 
 const mainContainerStyle = {
   'margin-top': '6em'
@@ -14,17 +13,49 @@ const mainContainerStyle = {
 class TrackSearchPage extends React.Component {
 
   constructor (props) {
-    super(props)
-    this.state = {
-      query: ''
+    super(props);
+
+    // Parse query string from URL.
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const param = urlParams.get('q');
+    const trackId = urlParams.get('id');
+
+    // If no query string found from URL, return home.
+    if (param === null) {
+      window.location.href = '../';
     }
+
     this.state = {
-      img: defaultAlbumArtUrl
+      loading: true,    /* Indicates whether data is still fetching */
+      query: param,     /* Currently querying string */
+      tracksData: null,
+      id: trackId
     }
   }
 
   handleSearchSubmit = () => {
     console.log('search:', this.state.query)
+  }
+
+  componentDidMount () {
+    // Get search results from backend.
+    BackendApiUtil.getTracksList(this.state.query).then((response) => {
+      if (response.data['code'] === 200) {
+        this.setState({
+          loading: false,
+          tracksData: response.data['data'],
+        })
+      } else if (response.data['code'] === 404) {
+        this.setState({
+          loading: false,
+          tracksData: null
+        })
+      }
+    }).catch((error) => {
+      // TODO Show error.
+      console.log('Error in getSearchData: ' + error)
+    })
   }
 
   render () {
@@ -35,44 +66,30 @@ class TrackSearchPage extends React.Component {
         <Container style={mainContainerStyle}>
           <Grid columns={16}>
 
+            <Grid.Column width={5}>
+              <Grid.Row>
+                <Header as='h1' dividing>Track Details</Header>
+                <TrackInfo trackId={this.state.id} />
+              </Grid.Row>
 
-            <Grid.Column width={6}>
-              <Header as='h1' dividing>Top Results</Header>
-              <ResultTop trackId={'1HXdv1z9RlvrcUernyf0MY'}/>
+              <Grid.Row>
+                <Link to="/addTracks">
+                  <Header.Subheader>The track content is wrong, click to edit</Header.Subheader>
+                </Link>
+              </Grid.Row>
+            </Grid.Column>
+
+            <Grid.Column width={1}>
+
             </Grid.Column>
 
             <Grid.Column width={10}>
-              <Grid.Row>
-                <Header as='h1' dividing>Maybe You Want To Search</Header>
-                <DuplicateSongs/>
-              </Grid.Row>
-
-
-              <Grid.Row style={{marginTop:'2em'}}>
-                <Grid columns={16}>
-                  <Grid.Column width={8}>
-                    <Header as='h1' dividing>Artist Related</Header>
-                    <RecommendedSongs/>
-                  </Grid.Column>
-
-                  <Grid.Column width={8}>
-                    <Header as='h1' dividing>Top Search</Header>
-                    <RecommendedSongs/>
-                  </Grid.Column>
-                </Grid>
-              </Grid.Row>
-
-
+              <Header as='h1' dividing>All results</Header>
+              <RecommendedSongs query={this.state.query} data={this.state.tracksData} loading={this.state.loading}/>
             </Grid.Column>
 
           </Grid>
         </Container>
-        <Link to="/addArtist">
-          <button className="ui icon button">
-            <i aria-hidden="true" className="search icon">
-            </i>
-          </button>
-        </Link>
 
       </div>
     )
