@@ -42,7 +42,6 @@ class SearchPage extends React.Component {
     // Get search results from backend.
     BackendApiUtil.getSearchData(this.state.query).then((response) => {
       if (response.data['code'] === 200) {
-        console.log('test: ' + response.data['data']['top']);
         this.setState({
           loading: false,
           topData: response.data['data']['top'],
@@ -70,14 +69,14 @@ class SearchPage extends React.Component {
         <Container style={mainContainerStyle}>
           <Grid columns={16} stackable>
 
-            <Grid.Row stretched>
+            <Grid.Row>
               <Grid.Column width={5}>
                 <Header as='h1' dividing>Top Result</Header>
                 <ResultTop data={this.state.topData} loading={this.state.loading} />
               </Grid.Column>
               <Grid.Column width={10} floated='right'>
                 <Header as='h1' dividing>Songs</Header>
-                <ResultSongs data={this.state.tracksData} loading={this.state.loading} />
+                <ResultSongs query={this.state.query} data={this.state.tracksData} loading={this.state.loading} />
               </Grid.Column>
             </Grid.Row>
 

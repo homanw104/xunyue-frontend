@@ -76,7 +76,7 @@ class ResultTop extends React.Component {
         id: null,
         name: 'No result',
         desc: 'no result',
-        extra: '/(ㄒoㄒ)/~~',
+        extra: '/(ToT)/~~',
         popularity: 0
       });
     }
