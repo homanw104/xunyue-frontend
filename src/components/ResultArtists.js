@@ -3,21 +3,22 @@ import { Grid, Header, Image } from "semantic-ui-react";
 
 import defaultAvatarUrl from '../assets/account_circle.svg';
 import SpotifyApiUtil from "../util/SpotifyApiUtil";
+import defaultAlbumArtUrl from "../assets/album.svg";
 
 class ResultArtists extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      imgList: [defaultAvatarUrl]
+      imgList: Array(6).fill(defaultAlbumArtUrl)
     }
   }
 
   componentWillReceiveProps(nextProps) {
     let data = nextProps.data;
     if (data !== null) {
-      let artistsIdList = data.map(a => a['id']);
       // Get album covers from Spotify.
+      let artistsIdList = data.map(a => a['id']);
       SpotifyApiUtil.getAvatarListByArtistId(artistsIdList).then((imgUrlList) => {
         this.setState({
           imgList: imgUrlList
@@ -35,14 +36,17 @@ class ResultArtists extends React.Component {
       return(
         <Grid stackable columns={6}>
           {this.props.data.map((item, index) => (
-            <Grid.Column>
+            <Grid.Column key={index}>
               <Grid centered>
                 <Grid.Row>
-                  <Image src={this.state.imgList[index]} alt='Avatar' size='tiny' circular />
+                  <Image src={this.state.imgList[index]}
+                         alt='Avatar' size='tiny'
+                         circular
+                  />
                 </Grid.Row>
                 <Grid.Row>
                   <Header as='h4'>
-                    <Header.Content as='a' href={'../artistSearch?id=' + item['id'] + '&q=' + this.props.query}>
+                    <Header.Content as='a' href={'../searchArtists?id=' + item['id'] + '&q=' + this.props.query}>
                       {item['name']}
                       <Header.Subheader>
                         Artist
@@ -61,23 +65,28 @@ class ResultArtists extends React.Component {
       // Return a loading column if parent's turned out to be loading.
       return(
         <Grid stackable columns={6}>
-          <Grid.Column>
-            <Grid centered>
-              <Grid.Row>
-                <Image src={defaultAvatarUrl} alt='Avatar' size='tiny' circular />
-              </Grid.Row>
-              <Grid.Row>
-                <Header as='h4'>
-                  <Header.Content>
-                    Loading...
-                    <Header.Subheader>
-                      Artist
-                    </Header.Subheader>
-                  </Header.Content>
-                </Header>
-              </Grid.Row>
-            </Grid>
-          </Grid.Column>
+          {this.state.imgList.map((item, index) => (
+            <Grid.Column key={index}>
+              <Grid centered>
+                <Grid.Row>
+                  <Image src={this.state.imgList[index]}
+                         alt='Avatar' size='tiny'
+                         circular
+                  />
+                </Grid.Row>
+                <Grid.Row>
+                  <Header as='h4'>
+                    <Header.Content>
+                      Loading...
+                      <Header.Subheader>
+                        Artist
+                      </Header.Subheader>
+                    </Header.Content>
+                  </Header>
+                </Grid.Row>
+              </Grid>
+            </Grid.Column>
+          ))}
         </Grid>
       );
 
@@ -89,7 +98,10 @@ class ResultArtists extends React.Component {
           <Grid.Column>
             <Grid centered>
               <Grid.Row>
-                <Image src={defaultAvatarUrl} alt='Avatar' size='tiny' circular />
+                <Image src={defaultAvatarUrl}
+                       alt='Avatar' size='tiny'
+                       circular
+                />
               </Grid.Row>
               <Grid.Row>
                 <Header as='h4'>

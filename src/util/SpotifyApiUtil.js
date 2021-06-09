@@ -182,7 +182,6 @@ class SpotifyApiUtil {
     // Send get request to Spotify API.
     try {
       let response = await axios(getOptions);
-      console.log(response.data);
       return response.data['artists'].map(a => a['images'][1]['url']);
     } catch(error) {
       throw new Error(error.message);

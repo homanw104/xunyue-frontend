@@ -8,6 +8,7 @@ class RecommendedSongs extends React.Component {
 
   render () {
     if (this.props.data !== null) {
+
       return (
         <Grid stackable columns={1}>
           {this.props.data.map(item => (
@@ -31,7 +32,9 @@ class RecommendedSongs extends React.Component {
           ))}
         </Grid>
       )
+
     } else {
+
       return (
         <Grid.Column>
             <Header as='h4' image>
@@ -45,6 +48,7 @@ class RecommendedSongs extends React.Component {
             </Header>
         </Grid.Column>
       )
+
     }
   }
 }

@@ -10,7 +10,7 @@ const mainContainerStyle = {
   'margin-top': '6em'
 }
 
-class TrackSearchPage extends React.Component {
+class SearchTracksPage extends React.Component {
 
   constructor (props) {
     super(props);
@@ -96,4 +96,4 @@ class TrackSearchPage extends React.Component {
   }
 }
 
-export default TrackSearchPage
+export default SearchTracksPage

@@ -1,12 +1,12 @@
 import React from 'react';
-import { Container, Grid, Header } from "semantic-ui-react";
+import {Container, Grid, Header} from "semantic-ui-react";
 
 import MenuBar from "../components/MenuBar";
+import Footer from "../components/Footer";
 import ResultTop from "../components/ResultTop";
 import ResultSongs from "../components/ResultSongs";
 import ResultArtists from "../components/ResultArtists";
 import BackendApiUtil from "../util/BackendApiUtil";
-import Footer from "../components/Footer";
 
 const mainContainerStyle = {
   marginTop: '6em'
@@ -76,35 +76,70 @@ class SearchPage extends React.Component {
   }
 
   render() {
-    return(
-      <Container>
-        <MenuBar query={this.state.query}/>
-        <Container style={mainContainerStyle}>
-          <Grid columns={16} stackable>
+    if (this.state.loading === false && this.state.topData === null) {
 
-            <Grid.Row>
-              <Grid.Column width={5}>
-                <Header as='h1' dividing>Top Result</Header>
-                <ResultTop query={this.state.query} data={this.state.topData} loading={this.state.loading} />
-              </Grid.Column>
-              <Grid.Column width={10} floated='right'>
-                <Header as='h1' dividing>Songs</Header>
-                <ResultSongs query={this.state.query} data={this.state.tracksData} loading={this.state.loading} />
-              </Grid.Column>
-            </Grid.Row>
+      // Return a universal prompt when no result is to display.
+      return (
+        <Container>
+          <MenuBar query={this.state.query}/>
+          <Container style={mainContainerStyle}>
+            <Grid columns={16}>
 
-            <Grid.Row>
-              <Grid.Column width={16}>
-                <Header as='h1' dividing>Artists</Header>
-                <ResultArtists query={this.state.query} data={this.state.artistsData} loading={this.state.loading} />
-              </Grid.Column>
-            </Grid.Row>
+              <Grid.Row centered verticalAlign='bottom' style={{ height: '40vh' }}>
+                <Grid.Column width={16}>
+                  <Header as='h1' textAlign="center">
+                    No results found for "{this.state.query}"
+                  </Header>
+                </Grid.Column>
+              </Grid.Row>
 
-          </Grid>
+              <Grid.Row centered verticalAlign='top' style={{height: '40vh'}}>
+                <Grid.Column width={16}>
+                  <Header sub as='h1' textAlign="center">
+                    Please make sure your words are spelled correctly or use less or different keywords.
+                  </Header>
+                </Grid.Column>
+              </Grid.Row>
+
+            </Grid>
+          </Container>
+          <Footer/>
         </Container>
-        <Footer />
-      </Container>
-    )
+      )
+
+    } else {
+
+      return (
+        <Container>
+          <MenuBar query={this.state.query}/>
+          <Container style={mainContainerStyle}>
+            <Grid columns={16} stackable>
+
+              <Grid.Row>
+                <Grid.Column width={5}>
+                  <Header as='h1' dividing>Top Result</Header>
+                  <ResultTop query={this.state.query} data={this.state.topData} loading={this.state.loading}/>
+                </Grid.Column>
+                <Grid.Column width={10} floated='right'>
+                  <Header as='h1' dividing>Songs</Header>
+                  <ResultSongs query={this.state.query} data={this.state.tracksData} loading={this.state.loading}/>
+                </Grid.Column>
+              </Grid.Row>
+
+              <Grid.Row>
+                <Grid.Column width={16}>
+                  <Header as='h1' dividing>Artists</Header>
+                  <ResultArtists query={this.state.query} data={this.state.artistsData} loading={this.state.loading}/>
+                </Grid.Column>
+              </Grid.Row>
+
+            </Grid>
+          </Container>
+          <Footer/>
+        </Container>
+      )
+
+    }
   }
 }
 

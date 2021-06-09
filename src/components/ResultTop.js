@@ -29,7 +29,7 @@ class ResultTop extends React.Component {
 
         // When top result is an artist.
         this.setState({
-          link: '../artistSearch?id=' + data['data']['id']
+          link: '../searchArtists?id=' + data['data']['id']
             + '&q=' + this.props.query,                                   /* Href to detail */
           type: 'artists',                                                /* Result type */
           img: defaultAlbumArtUrl,                                        /* Artist avatar */
@@ -45,6 +45,7 @@ class ResultTop extends React.Component {
             img: imgUrl
           })
         }).catch((error) => {
+          // TODO
           console.log('Error in getAvatarByArtistId: ' + error);
         });
 
@@ -52,7 +53,7 @@ class ResultTop extends React.Component {
 
         // When top result is a track.
         this.setState({
-          link: '../trackSearch?id=' + data['data']['id']
+          link: '../searchTracks?id=' + data['data']['id']
             + '&q=' + this.props.query,                                   /* Href to detail */
           type: 'tracks',                                                 /* Result type */
           img: defaultAlbumArtUrl,                                        /* Album cover */
@@ -69,6 +70,7 @@ class ResultTop extends React.Component {
             img: imgUrl
           })
         }).catch((error) => {
+          // TODO
           console.log('Error in getAlbumArtByTrackId: ' + error);
         });
 

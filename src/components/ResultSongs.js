@@ -10,15 +10,15 @@ class ResultSongs extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      imgList: [defaultAlbumArtUrl]
+      imgList: Array(6).fill(defaultAlbumArtUrl)
     }
   }
 
   componentWillReceiveProps(nextProps) {
     let data = nextProps.data;
     if (data !== null) {
-      let tracksIdList = data.map(a => a['id']);
       // Get album covers from Spotify.
+      let tracksIdList = data.map(a => a['id']);
       SpotifyApiUtil.getAlbumArtListByArtistId(tracksIdList).then((imgUrlList) => {
         this.setState({
           imgList: imgUrlList
@@ -34,25 +34,30 @@ class ResultSongs extends React.Component {
 
       // Return a grid of result if data exists.
       return(
-        <Grid stackable columns={2}>
+        <Grid doubling columns={2}>
           {this.props.data.map((item, index) => (
-            <Grid.Column>
+            <Grid.Column key={index}>
               <Table basic='very'>
-                <Table.Row verticalAlign='top'>
-                  <Table.Cell collapsing>
-                    <Image src={this.state.imgList[index]} alt='Album art' size='tiny' rounded />
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Header as='h4'>
-                      <Header.Content as='a' href={'../trackSearch?id=' + item['id'] + '&q=' + this.props.query}>
-                        {item['name']}
-                        <Header.Subheader>
-                          {StringUtil.artistsToString(item['artists'])}
-                        </Header.Subheader>
-                      </Header.Content>
-                    </Header>
-                  </Table.Cell>
-                </Table.Row>
+                <Table.Body>
+                  <Table.Row verticalAlign='top'>
+                    <Table.Cell collapsing>
+                      <Image src={this.state.imgList[index]}
+                             alt='Album art' size='tiny'
+                             rounded
+                      />
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Header as='h4'>
+                        <Header.Content as='a' href={'../searchTracks?id=' + item['id'] + '&q=' + this.props.query}>
+                          {item['name']}
+                          <Header.Subheader>
+                            {StringUtil.artistsToString(item['artists'])}
+                          </Header.Subheader>
+                        </Header.Content>
+                      </Header>
+                    </Table.Cell>
+                  </Table.Row>
+                </Table.Body>
               </Table>
             </Grid.Column>
           ))}
@@ -63,17 +68,34 @@ class ResultSongs extends React.Component {
 
       // Return a loading column if parent's turned out to be loading.
       return(
-        <Grid.Column>
-          <Header as='h4' image>
-            <Image src={defaultAlbumArtUrl} />
-            <Header.Content>
-              Loading...
-              <Header.Subheader>
-                Loading...
-              </Header.Subheader>
-            </Header.Content>
-          </Header>
-        </Grid.Column>
+        <Grid doubling columns={2}>
+          {this.state.imgList.map((item, index) => (
+            <Grid.Column key={index}>
+              <Table basic='very'>
+                <Table.Body>
+                  <Table.Row verticalAlign='top'>
+                    <Table.Cell collapsing>
+                      <Image src={this.state.imgList[index]}
+                             alt='Album art' size='tiny'
+                             rounded
+                      />
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Header as='h4'>
+                        <Header.Content>
+                          Loading...
+                          <Header.Subheader>
+                            Loading...
+                          </Header.Subheader>
+                        </Header.Content>
+                      </Header>
+                    </Table.Cell>
+                  </Table.Row>
+                </Table.Body>
+              </Table>
+            </Grid.Column>
+          ))}
+        </Grid>
       );
 
     } else {
@@ -82,7 +104,10 @@ class ResultSongs extends React.Component {
       return(
         <Grid.Column>
           <Header as='h4' image>
-            <Image src={defaultAlbumArtUrl} />
+            <Image src={defaultAlbumArtUrl}
+                   alt='Album art' size='tiny'
+                   rounded
+            />
             <Header.Content>
               No Result
               <Header.Subheader>

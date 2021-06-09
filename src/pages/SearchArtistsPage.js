@@ -10,7 +10,7 @@ const mainContainerStyle = {
   'margin-top': '6em'
 }
 
-class ArtistSearchPage extends React.Component {
+class SearchArtistsPage extends React.Component {
 
   constructor (props) {
     super(props)
@@ -65,4 +65,4 @@ class ArtistSearchPage extends React.Component {
   }
 }
 
-export default ArtistSearchPage;
+export default SearchArtistsPage;

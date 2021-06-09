@@ -29,14 +29,21 @@ class HomePage extends React.Component {
       <Container>
         <Grid columns={16}>
 
-          <Grid.Row centered>
-            <Grid.Column width={6}>
-              <Header as='h1' textAlign="center" style={{ marginTop: '4em', fontSize: '45px' }}>寻乐</Header>
+          <Grid.Row centered verticalAlign='bottom' style={{ height: '45vh' }}>
+            <Grid.Column mobile={14} tablet={10} computer={6}>
+              <Header as='h1'
+                      textAlign="center"
+                      style={{
+                        fontSize: '45px',
+                        fontFamily: '"PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei"'
+                      }}>
+                寻乐
+              </Header>
             </Grid.Column>
           </Grid.Row>
 
-          <Grid.Row centered>
-            <Grid.Column width={6}>
+          <Grid.Row centered verticalAlign='top' style={{ height: '45vh' }}>
+            <Grid.Column mobile={14} tablet={10} computer={6}>
               <Form onSubmit={this.handleSearchSubmit}>
                 <Form.Input
                   icon='search'
