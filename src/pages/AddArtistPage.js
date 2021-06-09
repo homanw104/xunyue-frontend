@@ -1,69 +1,83 @@
 import React from 'react'
-import { Button, Dimmer, Header, Image, Container, Form } from 'semantic-ui-react'
+import axios from 'axios'
+import { Button, Form, Container} from 'semantic-ui-react'
+import { backendUrl } from '../util/BackendApiUtil'
+import MenuBar from '../components/MenuBar'
+import Footer from '../components/Footer'
+
+const mainContainerStyle = {
+  marginTop: '6em'
+}
 
 class AddArtistPage extends React.Component {
 
-  state = {}
+  constructor (props) {
+    super(props);
+    this.state = {
+      artistName: '',
+      followers:'',
+      genres:'',
+      popularity:''
+
+
+    }
+    this.handleInputChange = this.handleInputChange.bind(this)
+  }
 
   handleShow = () => this.setState({ active: true })
   handleHide = () => this.setState({ active: false })
 
+  handleOnSubmit = () => {
+    const postOptions = {
+      method: 'post',
+      url: backendUrl + '/artists/insert',
+      params: {
+        name: this.state.artistName,
+        followers: this.state.followers,
+        genres: this.state.genres,
+        popularity:this.state.popularity
+      }
+    }
+
+    axios(postOptions).then(() => {
+      window.history.back()
+    }).catch((error) => {
+      console.log(error)
+    })
+  }
+
+  handleInputChange (event) {
+    const target = event.target
+    const value = target.value
+    const name = target.name
+
+    this.setState({
+      [name]: value
+    })
+  }
+
   render () {
-    const { active } = this.state
-    const content = (
-      <div>
-        <Button primary>Add</Button>
-      </div>
-    )
-
     return (
-      <div>
+      <Container style={mainContainerStyle}>
+        <MenuBar/>
+        <Form onSubmit={this.handleOnSubmit}>
+            <Form.Input label='Artist name' placeholder='input' name='artistName'
+                        onChange={this.handleInputChange}
+            />
+            <Form.Input label='Followers' placeholder='input' name='followers'
+                        onChange={this.handleInputChange}
+            />
 
-        <Container style={{ marginTop: '3em', marginLeft: '2em' }}>
-          <Dimmer.Dimmable
-            as={Image}
-            dimmed={active}
-            dimmer={{ active, content }}
-            onMouseEnter={this.handleShow}
-            onMouseLeave={this.handleHide}
-            size='medium'
-            src='https://react.semantic-ui.com/images/wireframe/image.png'
-          />
-        </Container>
-        <Form>
-          <Form.Group>
-            <Form.Field>
-              <Header as='h4' style={{ marginLeft: '4em', marginTop: '4em' }}>Artist name</Header>
-              <input type='text' placeholder='input' style={{ width: '300px', height: '30px', marginLeft: '4em' }}/>
-            </Form.Field>
-
-            <Form.Field>
-              <Header as='h4' style={{ marginLeft: '8em', marginTop: '4em' }}>Fans</Header>
-              <input type='text' placeholder='input' style={{ width: '300px', height: '30px', marginLeft: '8em' }}/>
-            </Form.Field>
-          </Form.Group>
+            <Form.Input label='Genres' placeholder='input' name='genres'
+                        onChange={this.handleInputChange}
+            />
+            <Form.Input label='Popularity' placeholder='input' name='popularity'
+                        onChange={this.handleInputChange}
+            />
+          <Button type='submit'>Submit</Button>
         </Form>
-
-
-        <Form>
-          <Form.Group>
-            <Form.Field>
-              <Header as='h4' style={{ marginLeft: '4em', marginTop: '4em' }}>Genre</Header>
-              <input type='text' placeholder='input' style={{ width: '300px', height: '30px', marginLeft: '4em' }}/>
-            </Form.Field>
-
-            <Form.Field>
-              <Header as='h4' style={{ marginLeft: '8em', marginTop: '4em' }}>Popularity</Header>
-              <input type='text' placeholder='input' style={{ width: '300px', height: '30px', marginLeft: '8em' }}/>
-            </Form.Field>
-          </Form.Group>
-        </Form>
-
-        <div style={{marginLeft:'75em',marginTop:'-1em'}}>
-          <button className="ui button">Submit</button>
-        </div>
-
-      </div>
+        <Footer />
+      </Container>
 
     )
   }

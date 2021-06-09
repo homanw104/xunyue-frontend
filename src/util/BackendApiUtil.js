@@ -4,10 +4,10 @@
  * @author Homan Wong
  */
 
-import axios from 'axios';
+import axios from 'axios'
 
-const backendUrl = 'http://127.0.0.1:8080'; /* Backend server IP: local server */
-// const backendUrl = 'http://api.homans.world:8080'; /* Backend server IP: remote server */
+export const backendUrl = 'http://127.0.0.1:8080' /* Backend server IP: local server */
+// export const backendUrl = 'http://api.homans.world:8080'; /* Backend server IP: remote server */
 
 class BackendApiUtil {
 
@@ -17,15 +17,15 @@ class BackendApiUtil {
    * @return {Promise} search results data object.
    * @throws Error error from backend API.
    */
-  static async getSearchData(query) {
+  static async getSearchData (query) {
     let getOptions = {
       method: 'get',
       url: backendUrl + '/search?name=' + query
     }
     try {
-      return await axios(getOptions);
+      return await axios(getOptions)
     } catch (error) {
-      throw new Error(error.message);
+      throw new Error(error.message)
     }
   }
 
@@ -35,15 +35,15 @@ class BackendApiUtil {
    * @return {Promise} track result data object.
    * @throws Error error from backend API.
    */
-  static async getTracksData(id) {
+  static async getTracksData (id) {
     let getOptions = {
       method: 'get',
       url: backendUrl + '/tracks/info?id=' + id
     }
     try {
-      return axios(getOptions);
-    } catch(error) {
-      throw new Error(error.message);
+      return axios(getOptions)
+    } catch (error) {
+      throw new Error(error.message)
     }
   }
 
@@ -53,15 +53,15 @@ class BackendApiUtil {
    * @return {Promise} artist result data object.
    * @throws Error error from backend API.
    */
-  static async getArtistsData(id) {
+  static async getArtistsData (id) {
     let getOptions = {
       method: 'get',
       url: backendUrl + '/artists/info?id=' + id
     }
     try {
-      return axios(getOptions);
-    } catch(error) {
-      throw new Error(error.message);
+      return axios(getOptions)
+    } catch (error) {
+      throw new Error(error.message)
     }
   }
 
@@ -71,18 +71,38 @@ class BackendApiUtil {
    * @return {Promise} artists list result data object.
    * @throws Error error from backend API.
    */
-  static async getTracksList(query) {
+  static async getTracksList (query) {
     let getOptions = {
       method: 'get',
       url: backendUrl + '/tracks/search?name=' + query
     }
     try {
-      return axios(getOptions);
-    } catch(error) {
-      throw new Error(error.message);
+      return axios(getOptions)
+    } catch (error) {
+      throw new Error(error.message)
     }
   }
 
+  /**
+   * Return Promise of search results from backend API.
+   * @param query artist's tracks
+   * @return {Promise} artists list result data object.
+   * @throws Error error from backend API.
+   */
+  static async getArtistTracks (query) {
+    let getOptions = {
+      method: 'get',
+      url: backendUrl + '/tracks/searchByArtists?id=' + query
+    }
+    try {
+      return axios(getOptions)
+    } catch (error) {
+      throw new Error(error.message)
+    }
+
+  }
+
+
 }
 
-export default BackendApiUtil;
+export default BackendApiUtil
