@@ -36,7 +36,7 @@ class ArtistInfo extends React.Component {
     })
 
     // Get album art from spotify.
-    SpotifyApiUtil.getAlbumArtListByArtistId(this.state.artistId).then((imgUrl) => {
+    SpotifyApiUtil.getAvatarByArtistId(this.state.artistId).then((imgUrl) => {
       this.setState({
         img: imgUrl
       })
@@ -53,7 +53,7 @@ class ArtistInfo extends React.Component {
           <Card.Content>
             <Card.Header>{this.state.artistName}</Card.Header>
             <Card.Description>
-              {this.state.followers} ∙   {this.state.popularity}
+              {this.state.followers} ∙ {this.state.popularity}
             </Card.Description>
           </Card.Content>
           <Card.Content>
