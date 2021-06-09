@@ -1,5 +1,5 @@
 import React from 'react'
-import defaultAlbumArtUrl from '../assets/album.svg'
+import defaultAlbumArtUrl from '../../assets/album.svg'
 import { Container } from 'semantic-ui-react'
 
 class TopSearches extends React.Component {

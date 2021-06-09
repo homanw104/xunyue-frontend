@@ -1,8 +1,8 @@
 import React from 'react'
 import { Grid, Header, Image, Table } from 'semantic-ui-react'
 
-import StringUtil from '../util/StringUtil'
-import defaultAlbumArtUrl from '../assets/album.svg'
+import StringUtil from '../../util/StringUtil'
+import defaultAlbumArtUrl from '../../assets/album.svg'
 
 class RecommendedArtists extends React.Component {
 

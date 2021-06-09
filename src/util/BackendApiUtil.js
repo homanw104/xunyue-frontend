@@ -6,8 +6,8 @@
 
 import axios from 'axios'
 
-export const backendUrl = 'http://127.0.0.1:8080' /* Backend server IP: local server */
-// export const backendUrl = 'http://api.homans.world:8080'; /* Backend server IP: remote server */
+// export const backendUrl = 'http://127.0.0.1:9900' /* Backend server IP: local server */
+export const backendUrl = 'http://api.homans.world:9900'; /* Backend server IP: remote server */
 
 class BackendApiUtil {
 

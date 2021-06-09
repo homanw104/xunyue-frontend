@@ -1,10 +1,10 @@
 import React from 'react'
 import { Container, Grid, Header } from 'semantic-ui-react'
-import MenuBar from '../components/MenuBar'
+import MenuBar from '../components/Public/MenuBar'
 import { Link } from 'react-router-dom'
-import RecommendedArtists from '../components/RecommendedArtists'
+import RecommendedArtists from '../components/SearchArtists/RecommendedArtists'
 import BackendApiUtil from '../util/BackendApiUtil'
-import ArtistInfo from '../components/ArtistInfo'
+import ArtistInfo from '../components/SearchArtists/ArtistInfo'
 
 const mainContainerStyle = {
   'margin-top': '6em'

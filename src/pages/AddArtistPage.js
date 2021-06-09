@@ -2,8 +2,8 @@ import React from 'react'
 import axios from 'axios'
 import { Button, Form, Container} from 'semantic-ui-react'
 import { backendUrl } from '../util/BackendApiUtil'
-import MenuBar from '../components/MenuBar'
-import Footer from '../components/Footer'
+import MenuBar from '../components/Public/MenuBar'
+import Footer from '../components/Public/Footer'
 
 const mainContainerStyle = {
   marginTop: '6em'

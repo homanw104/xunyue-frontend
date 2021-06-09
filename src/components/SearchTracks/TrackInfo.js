@@ -1,10 +1,10 @@
 import React from 'react';
 import { Card, Container, Image } from 'semantic-ui-react';
 
-import StringUtil from "../util/StringUtil";
-import SpotifyApiUtil from "../util/SpotifyApiUtil";
-import BackendApiUtil from "../util/BackendApiUtil";
-import defaultAlbumArtUrl from '../assets/logo.svg';
+import StringUtil from "../../util/StringUtil";
+import SpotifyApiUtil from "../../util/SpotifyApiUtil";
+import BackendApiUtil from "../../util/BackendApiUtil";
+import defaultAlbumArtUrl from '../../assets/album.svg';
 
 class TrackInfo extends React.Component {
 

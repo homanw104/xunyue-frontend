@@ -1,17 +1,17 @@
 import React from 'react';
 import { Card, Container, Image } from 'semantic-ui-react';
 
-import StringUtil from "../util/StringUtil";
-import SpotifyApiUtil from "../util/SpotifyApiUtil";
-import BackendApiUtil from "../util/BackendApiUtil";
-import defaultAlbumArtUrl from '../assets/logo.svg';
+import StringUtil from "../../util/StringUtil";
+import SpotifyApiUtil from "../../util/SpotifyApiUtil";
+import BackendApiUtil from "../../util/BackendApiUtil";
+import defaultAvatarUrl from '../../assets/avatar.svg';
 
 class ArtistInfo extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      img: defaultAlbumArtUrl,
+      img: defaultAvatarUrl,
       artistId: this.props.artistId,
       artistName: 'Artist',
       followers: '0',

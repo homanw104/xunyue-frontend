@@ -1,9 +1,9 @@
 import React from 'react'
 import { Container, Grid, Header } from 'semantic-ui-react'
-import MenuBar from '../components/MenuBar'
+import MenuBar from '../components/Public/MenuBar'
 import { Link } from 'react-router-dom'
-import RecommendedSongs from '../components/RecommendedSongs'
-import TrackInfo from '../components/TrackInfo'
+import RecommendedSongs from '../components/SearchTracks/RecommendedSongs'
+import TrackInfo from '../components/SearchTracks/TrackInfo'
 import BackendApiUtil from '../util/BackendApiUtil'
 
 const mainContainerStyle = {

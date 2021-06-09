@@ -1,9 +1,9 @@
 import React from 'react'
 import { Grid, Header, Image, Table } from 'semantic-ui-react'
 
-import defaultAlbumArtUrl from '../assets/album.svg'
-import StringUtil from "../util/StringUtil";
-import SpotifyApiUtil from "../util/SpotifyApiUtil";
+import defaultAlbumArtUrl from '../../assets/album.svg'
+import StringUtil from "../../util/StringUtil";
+import SpotifyApiUtil from "../../util/SpotifyApiUtil";
 
 class ResultSongs extends React.Component {
 

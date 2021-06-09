@@ -1,11 +1,11 @@
 import React from 'react';
 import {Container, Grid, Header} from "semantic-ui-react";
 
-import MenuBar from "../components/MenuBar";
-import Footer from "../components/Footer";
-import ResultTop from "../components/ResultTop";
-import ResultSongs from "../components/ResultSongs";
-import ResultArtists from "../components/ResultArtists";
+import MenuBar from "../components/Public/MenuBar";
+import Footer from "../components/Public/Footer";
+import ResultTop from "../components/Search/ResultTop";
+import ResultSongs from "../components/Search/ResultSongs";
+import ResultArtists from "../components/Search/ResultArtists";
 import BackendApiUtil from "../util/BackendApiUtil";
 
 const mainContainerStyle = {

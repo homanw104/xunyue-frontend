@@ -1,16 +1,15 @@
 import React from 'react';
 import { Grid, Header, Image } from "semantic-ui-react";
 
-import defaultAvatarUrl from '../assets/account_circle.svg';
-import SpotifyApiUtil from "../util/SpotifyApiUtil";
-import defaultAlbumArtUrl from "../assets/album.svg";
+import defaultAvatarUrl from '../../assets/avatar.svg';
+import SpotifyApiUtil from "../../util/SpotifyApiUtil";
 
 class ResultArtists extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      imgList: Array(6).fill(defaultAlbumArtUrl)
+      imgList: Array(6).fill(defaultAvatarUrl)
     }
   }
 
@@ -24,6 +23,7 @@ class ResultArtists extends React.Component {
           imgList: imgUrlList
         })
       }).catch((error) => {
+        // TODO
         console.log('Error in getAvatarListByArtistId: ' + error);
       });
     }
