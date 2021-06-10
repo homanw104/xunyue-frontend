@@ -40,8 +40,6 @@ class SearchPage extends React.Component {
   handleSearchSubmit = () => {
     if (this.state.query !== '') {
       window.location.href = './tracks/search?q=' + this.state.query;
-    } else {
-      /* Do nothing. */
     }
   }
 
@@ -105,10 +103,11 @@ class SearchPage extends React.Component {
           </Container>
           <Footer/>
         </Container>
-      )
+      );
 
     } else {
 
+      // Return a result page.
       return (
         <Container>
           <MenuBar query={this.state.query}/>
@@ -137,7 +136,7 @@ class SearchPage extends React.Component {
           </Container>
           <Footer/>
         </Container>
-      )
+      );
 
     }
   }

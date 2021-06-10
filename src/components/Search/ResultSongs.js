@@ -102,20 +102,15 @@ class ResultSongs extends React.Component {
 
       // Return 'NO RESULT' if data === null and parent is not loading.
       return(
-        <Grid.Column>
-          <Header as='h4' image>
-            <Image src={defaultAlbumArtUrl}
-                   alt='Album art' size='tiny'
-                   rounded
-            />
-            <Header.Content>
-              No Result
-              <Header.Subheader>
-                no result
-              </Header.Subheader>
-            </Header.Content>
-          </Header>
-        </Grid.Column>
+        <Grid doubling columns={2}>
+          <Grid.Row centered verticalAlign='bottom'>
+            <Grid.Column width={16}>
+              <Header as='h1' textAlign="center">
+                No related tracks found.
+              </Header>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
       );
 
     }
