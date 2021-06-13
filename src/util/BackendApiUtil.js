@@ -6,8 +6,8 @@
 
 import axios from 'axios'
 
-// export const backendUrl = 'https://localhost:9900' /* Backend server IP: local server */
-export const backendUrl = 'https://api.homans.world:9900'; /* Backend server IP: remote server */
+// export const backendUrl = 'http://localhost:9980'; /* Backend server IP (local server, http port)  */
+export const backendUrl = 'https://api.xunyue.homans.world:9900'; /* Backend server IP (remote server, https port) */
 
 class BackendApiUtil {
 
@@ -99,9 +99,7 @@ class BackendApiUtil {
     } catch (error) {
       throw new Error(error.message)
     }
-
   }
-
 
 }
 

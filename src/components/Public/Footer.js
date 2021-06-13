@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Icon, Segment } from "semantic-ui-react";
+import {Container, Icon, Segment} from "semantic-ui-react";
 
 class Footer extends React.Component {
 
@@ -8,8 +8,8 @@ class Footer extends React.Component {
   }
 
   render() {
-    return(
-      <Segment vertical style={{ padding: '5em 0em' }}>
+    return (
+      <Segment vertical style={{padding: '5em 0em'}}>
         <Container textAlign='center'>
           <p>
             Copyright © 2020 - 2021 <a href="https://homans.world" rel="noreferrer" target="_blank">Homan 是企鹅</a>.

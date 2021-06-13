@@ -1,18 +1,19 @@
 import React from 'react'
-import { Container, Grid, Header } from 'semantic-ui-react'
+import {Container, Grid, Header} from 'semantic-ui-react'
+
 import MenuBar from '../components/Public/MenuBar'
-import { Link } from 'react-router-dom'
-import RecommendedSongs from '../components/SearchTracks/RecommendedSongs'
+import Footer from "../components/Public/Footer";
 import TrackInfo from '../components/SearchTracks/TrackInfo'
+import MoreOfTrack from '../components/SearchTracks/MoreOfTrack'
 import BackendApiUtil from '../util/BackendApiUtil'
 
 const mainContainerStyle = {
-  'margin-top': '6em'
+  'marginTop': '6em'
 }
 
 class SearchTracksPage extends React.Component {
 
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     // Parse query string from URL.
@@ -34,11 +35,7 @@ class SearchTracksPage extends React.Component {
     }
   }
 
-  handleSearchSubmit = () => {
-    console.log('search:', this.state.query)
-  }
-
-  componentDidMount () {
+  componentDidMount() {
     // Get search results from backend.
     BackendApiUtil.getTracksList(this.state.query).then((response) => {
       if (response.data['code'] === 200) {
@@ -58,42 +55,31 @@ class SearchTracksPage extends React.Component {
     })
   }
 
-  render () {
+  render() {
     return (
-      <div>
-        <MenuBar/>
-
+      <Container>
+        <MenuBar query={this.state.query}/>
         <Container style={mainContainerStyle}>
           <Grid columns={16}>
 
             <Grid.Column width={5}>
               <Grid.Row>
                 <Header as='h1' dividing>Track Details</Header>
-                <TrackInfo trackId={this.state.id} />
-              </Grid.Row>
-
-              <Grid.Row>
-                <Link to="/addTracks">
-                  <Header.Subheader>The track content is wrong, click to edit</Header.Subheader>
-                </Link>
+                <TrackInfo query={this.state.query} trackId={this.state.id} loading={this.state.loading}/>
               </Grid.Row>
             </Grid.Column>
 
-            <Grid.Column width={1}>
-
-            </Grid.Column>
-
-            <Grid.Column width={10}>
+            <Grid.Column width={10} floated='right'>
               <Header as='h1' dividing>All results</Header>
-              <RecommendedSongs query={this.state.query} data={this.state.tracksData} loading={this.state.loading}/>
+              <MoreOfTrack query={this.state.query} data={this.state.tracksData} loading={this.state.loading}/>
             </Grid.Column>
 
           </Grid>
         </Container>
-
-      </div>
+        <Footer/>
+      </Container>
     )
   }
 }
 
-export default SearchTracksPage
+export default SearchTracksPage;

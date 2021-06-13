@@ -10,11 +10,18 @@ const mainContainerStyle = {
   marginTop: '6em'
 }
 
-class AddArtistPage extends React.Component {
+class EditArtistPage extends React.Component {
 
   constructor(props) {
     super(props);
+
+    // Parse query string from URL.
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const id = urlParams.get('id');
+
     this.state = {
+      artistId: id,
       artistName: '',
       followers: '',
       genres: '',
@@ -35,7 +42,7 @@ class AddArtistPage extends React.Component {
       }
     }
     axios(postOptions).then(() => {
-      window.history.back()
+      window.history.go(-2);
     }).catch((error) => {
       // TODO Show error.
       console.log(error);
@@ -48,6 +55,22 @@ class AddArtistPage extends React.Component {
     const name = target.name
     this.setState({
       [name]: value
+    })
+  }
+
+  handleClickDelete = () => {
+    const postOptions = {
+      method: 'post',
+      url: backendUrl + '/artists/delete',
+      params: {
+        id: this.state.artistId
+      }
+    }
+    axios(postOptions).then(() => {
+      window.history.back();
+    }).catch((error) => {
+      // TODO Show error.
+      console.log(error);
     })
   }
 
@@ -68,7 +91,8 @@ class AddArtistPage extends React.Component {
           <Form.Input label='Popularity' name='popularity'
                       onChange={this.handleInputChange}
           />
-          <Button type='submit'>Submit</Button>
+          <Button onClick={this.handleClickDelete}>Delete Artist</Button>
+          <Button type='submit'>Submit Changes</Button>
         </Form>
         <Footer/>
       </Container>
@@ -77,4 +101,4 @@ class AddArtistPage extends React.Component {
 
 }
 
-export default AddArtistPage;
+export default EditArtistPage;

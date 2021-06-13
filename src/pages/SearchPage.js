@@ -1,5 +1,6 @@
 import React from 'react';
 import {Container, Grid, Header} from "semantic-ui-react";
+import {Link} from "react-router-dom";
 
 import MenuBar from "../components/Public/MenuBar";
 import Footer from "../components/Public/Footer";
@@ -30,6 +31,7 @@ class SearchPage extends React.Component {
     // Set query string and component data in state.
     this.state = {
       loading: true,    /* Indicates whether data is still fetching */
+      errorStr: null,   /* Indicates whether there is error when fetching */
       query: param,     /* Currently querying string */
       topData: null,    /* Top result data */
       tracksData: null, /* Tracks result data */
@@ -61,29 +63,28 @@ class SearchPage extends React.Component {
         });
       } else if (response.data['code'] === 404) {
         this.setState({
-          loading: false,
-          topData: null,
-          tracksData: null,
-          artistsData: null
+          loading: false
         });
       }
     }).catch((error) => {
-      // TODO Show error.
-      console.log('Error in getSearchData: ' + error);
+      this.setState({
+        loading: false,
+        errorStr: error.toString()
+      });
     });
   }
 
   render() {
     if (this.state.loading === false && this.state.topData === null) {
 
-      // Return a universal prompt when no result is to display.
+      // Return a prompt when result is empty.
       return (
         <Container>
           <MenuBar query={this.state.query}/>
           <Container style={mainContainerStyle}>
             <Grid columns={16}>
 
-              <Grid.Row centered verticalAlign='bottom' style={{ height: '40vh' }}>
+              <Grid.Row centered verticalAlign='bottom' style={{height: '44vh'}}>
                 <Grid.Column width={16}>
                   <Header as='h1' textAlign="center">
                     No results found for "{this.state.query}"
@@ -91,10 +92,11 @@ class SearchPage extends React.Component {
                 </Grid.Column>
               </Grid.Row>
 
-              <Grid.Row centered verticalAlign='top' style={{height: '40vh'}}>
+              <Grid.Row centered verticalAlign='top' style={{height: '44vh'}}>
                 <Grid.Column width={16}>
                   <Header sub as='h1' textAlign="center">
-                    Please make sure your words are spelled correctly or use less or different keywords.
+                    Please make sure your words are spelled correctly or use less or different keywords.<br/><br/>
+                    You can <Link to='../addTrack'>add a song</Link> or <Link to='../addArtist'>add an artist</Link>.
                   </Header>
                 </Grid.Column>
               </Grid.Row>
@@ -120,14 +122,16 @@ class SearchPage extends React.Component {
                   <ResultTop query={this.state.query} data={this.state.topData} loading={this.state.loading}/>
                 </Grid.Column>
                 <Grid.Column width={10} floated='right'>
-                  <Header as='h1' dividing>Songs</Header>
+                  {(this.state.loading === true || this.state.tracksData.length > 0) &&
+                  <Header as='h1' dividing>Songs</Header>}
                   <ResultSongs query={this.state.query} data={this.state.tracksData} loading={this.state.loading}/>
                 </Grid.Column>
               </Grid.Row>
 
               <Grid.Row>
                 <Grid.Column width={16}>
-                  <Header as='h1' dividing>Artists</Header>
+                  {(this.state.loading === true || this.state.artistsData.length > 0) &&
+                  <Header as='h1' dividing>Artists</Header>}
                   <ResultArtists query={this.state.query} data={this.state.artistsData} loading={this.state.loading}/>
                 </Grid.Column>
               </Grid.Row>
@@ -140,6 +144,7 @@ class SearchPage extends React.Component {
 
     }
   }
+
 }
 
 export default SearchPage;

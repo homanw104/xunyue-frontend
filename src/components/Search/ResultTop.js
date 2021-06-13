@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Container, Image } from 'semantic-ui-react';
+import {Card, Container, Image} from 'semantic-ui-react';
 
 import StringUtil from "../../util/StringUtil";
 import SpotifyApiUtil from "../../util/SpotifyApiUtil";
@@ -70,7 +70,7 @@ class ResultTop extends React.Component {
             img: imgUrl
           })
         }).catch((error) => {
-          // TODO
+          // TODO Show error.
           console.log('Error in getAlbumArtByTrackId: ' + error);
         });
 
@@ -90,7 +90,7 @@ class ResultTop extends React.Component {
   }
 
   render() {
-    return(
+    return (
       <Container>
         <Card fluid>
           <Image as='a'

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Container, Image } from 'semantic-ui-react';
+import {Button, Card, Container, Image} from 'semantic-ui-react';
 
 import StringUtil from "../../util/StringUtil";
 import SpotifyApiUtil from "../../util/SpotifyApiUtil";
@@ -26,7 +26,6 @@ class TrackInfo extends React.Component {
   componentDidMount() {
     // Get track info from backend.
     BackendApiUtil.getTracksData(this.state.trackId).then((response) => {
-      console.log(response);
       this.setState({
         trackName: response.data['data']['name'],
         artistId: (response.data['data']['id_artists']).slice(2, -2).split('\', \'').join(', '),
@@ -37,6 +36,7 @@ class TrackInfo extends React.Component {
         popularity: response.data['data']['popularity']
       })
     }).catch((error) => {
+      // TODO Show error.
       console.log(error);
     })
 
@@ -46,23 +46,34 @@ class TrackInfo extends React.Component {
         img: imgUrl
       })
     }).catch((error) => {
+      // TODO Show error.
       console.log(error);
     });
   }
 
+  handleOnClick = () => {
+    window.location.href = '../editTrack?id=' + this.state.trackId;
+  }
+
   render() {
-    return(
+    return (
       <Container>
         <Card fluid>
-          <Image src={this.state.img} wrapped ui={false} />
+          <Image src={this.state.img} wrapped ui={false}/>
           <Card.Content>
-            <Card.Header>{this.state.trackName}</Card.Header>
+            <Card.Header>
+              {this.state.trackName + ' '}
+              <Button circular compact size='tiny' icon='edit'
+                      style={{backgroundColor: '#ffffffff'}}
+                      onClick={this.handleOnClick}
+              />
+            </Card.Header>
             <Card.Description>
               {this.state.releaseDate} ∙ {this.state.duration}
             </Card.Description>
           </Card.Content>
           <Card.Content extra>
-            <a href={'/artist/' + this.state.artistId}>
+            <a href={'/searchArtists?id=' + this.state.artistId + '&q=' + this.props.query}>
               {this.state.artistName}
             </a>
           </Card.Content>

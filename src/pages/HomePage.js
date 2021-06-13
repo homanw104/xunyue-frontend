@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Header, Container, Form } from 'semantic-ui-react'
+import {Grid, Header, Container, Form} from 'semantic-ui-react'
 
 class HomePage extends React.Component {
 
@@ -13,23 +13,21 @@ class HomePage extends React.Component {
   handleSearchSubmit = () => {
     if (this.state.query !== '') {
       window.location.href = './search?q=' + this.state.query;
-    } else {
-      /* Do nothing. */
     }
   }
 
-  handleInputChange = (e) => {
+  handleInputChange = (event) => {
     this.setState({
-      query: e.target.value,
+      query: event.target.value,
     });
   }
 
-  render () {
+  render() {
     return (
       <Container>
         <Grid columns={16}>
 
-          <Grid.Row centered verticalAlign='bottom' style={{ height: '45vh' }}>
+          <Grid.Row centered verticalAlign='bottom' style={{height: '45vh'}}>
             <Grid.Column mobile={14} tablet={10} computer={6}>
               <Header as='h1'
                       textAlign="center"
@@ -42,7 +40,7 @@ class HomePage extends React.Component {
             </Grid.Column>
           </Grid.Row>
 
-          <Grid.Row centered verticalAlign='top' style={{ height: '45vh' }}>
+          <Grid.Row centered verticalAlign='top' style={{height: '45vh'}}>
             <Grid.Column mobile={14} tablet={10} computer={6}>
               <Form onSubmit={this.handleSearchSubmit}>
                 <Form.Input
@@ -60,6 +58,7 @@ class HomePage extends React.Component {
       </Container>
     )
   }
+
 }
 
-export default HomePage
+export default HomePage;

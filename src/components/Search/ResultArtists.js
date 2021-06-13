@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Header, Image } from "semantic-ui-react";
+import {Grid, Header, Image} from "semantic-ui-react";
 
 import defaultAvatarUrl from '../../assets/avatar.svg';
 import SpotifyApiUtil from "../../util/SpotifyApiUtil";
@@ -23,7 +23,7 @@ class ResultArtists extends React.Component {
           imgList: imgUrlList
         })
       }).catch((error) => {
-        // TODO
+        // TODO Show error.
         console.log('Error in getAvatarListByArtistId: ' + error);
       });
     }
@@ -33,7 +33,7 @@ class ResultArtists extends React.Component {
     if (this.props.data !== null) {
 
       // Return a grid of artists if data exists.
-      return(
+      return (
         <Grid stackable columns={6}>
           {this.props.data.map((item, index) => (
             <Grid.Column key={index}>
@@ -63,7 +63,7 @@ class ResultArtists extends React.Component {
     } else if (this.props.loading === true) {
 
       // Return a loading column if parent's turned out to be loading.
-      return(
+      return (
         <Grid stackable columns={6}>
           {this.state.imgList.map((item, index) => (
             <Grid.Column key={index}>
@@ -93,7 +93,7 @@ class ResultArtists extends React.Component {
     } else {
 
       // Return 'NO RESULT' if data === null and parent is not loading.
-      return(
+      return (
         <Grid stackable columns={6}>
           <Grid.Column>
             <Grid centered>

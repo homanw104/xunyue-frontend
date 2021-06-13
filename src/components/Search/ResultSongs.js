@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Header, Image, Table } from 'semantic-ui-react'
+import {Grid, Header, Image, Table} from 'semantic-ui-react'
 
 import defaultAlbumArtUrl from '../../assets/album.svg'
 import StringUtil from "../../util/StringUtil";
@@ -24,6 +24,7 @@ class ResultSongs extends React.Component {
           imgList: imgUrlList
         })
       }).catch((error) => {
+        // TODO Show error.
         console.log('Error in getAlbumArtListByArtistId: ' + error);
       });
     }
@@ -33,7 +34,7 @@ class ResultSongs extends React.Component {
     if (this.props.data !== null) {
 
       // Return a grid of result if data exists.
-      return(
+      return (
         <Grid doubling columns={2}>
           {this.props.data.map((item, index) => (
             <Grid.Column key={index}>
@@ -64,10 +65,10 @@ class ResultSongs extends React.Component {
         </Grid>
       );
 
-    } else if(this.props.loading === true) {
+    } else if (this.props.loading === true) {
 
       // Return a loading column if parent's turned out to be loading.
-      return(
+      return (
         <Grid doubling columns={2}>
           {this.state.imgList.map((item, index) => (
             <Grid.Column key={index}>
@@ -101,7 +102,7 @@ class ResultSongs extends React.Component {
     } else {
 
       // Return 'NO RESULT' if data === null and parent is not loading.
-      return(
+      return (
         <Grid doubling columns={2}>
           <Grid.Row centered verticalAlign='bottom'>
             <Grid.Column width={16}>

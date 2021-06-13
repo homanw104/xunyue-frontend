@@ -1,10 +1,11 @@
-import React from 'react'
-import { Container, Grid, Header } from 'semantic-ui-react'
-import MenuBar from '../components/Public/MenuBar'
-import { Link } from 'react-router-dom'
-import RecommendedArtists from '../components/SearchArtists/RecommendedArtists'
-import BackendApiUtil from '../util/BackendApiUtil'
-import ArtistInfo from '../components/SearchArtists/ArtistInfo'
+import React from 'react';
+import {Container, Grid, Header} from 'semantic-ui-react';
+
+import MenuBar from '../components/Public/MenuBar';
+import Footer from "../components/Public/Footer";
+import ArtistInfo from '../components/SearchArtists/ArtistInfo';
+import MoreOfArtist from '../components/SearchArtists/MoreOfArtist';
+import BackendApiUtil from '../util/BackendApiUtil';
 
 const mainContainerStyle = {
   'margin-top': '6em'
@@ -12,7 +13,7 @@ const mainContainerStyle = {
 
 class SearchArtistsPage extends React.Component {
 
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     // Parse query string from URL.
@@ -27,20 +28,16 @@ class SearchArtistsPage extends React.Component {
     }
 
     this.state = {
-      loading: true,    /* Indicates whether data is still fetching */
-      query: artistId,     /* Currently querying string */
+      loading: true,        /* Indicates whether data is still fetching */
+      query: param,         /* Currently querying string */
       artistTracksData: null,
       id: artistId
     }
   }
 
-  handleSearchSubmit = () => {
-    console.log('search:', this.state.query)
-  }
-
-  componentDidMount () {
+  componentDidMount() {
     // Get search results from backend.
-    BackendApiUtil.getArtistTracks(this.state.query).then((response) => {
+    BackendApiUtil.getArtistTracks(this.state.id).then((response) => {
       if (response.data['code'] === 200) {
         this.setState({
           loading: false,
@@ -58,40 +55,29 @@ class SearchArtistsPage extends React.Component {
     })
   }
 
-  render () {
+  render() {
     return (
-      <div>
-        <MenuBar/>
-
+      <Container>
+        <MenuBar query={this.state.query}/>
         <Container style={mainContainerStyle}>
           <Grid columns={16}>
 
             <Grid.Column width={5}>
               <Grid.Row>
                 <Header as='h1' dividing>Artist Details</Header>
-                <ArtistInfo artistId={this.state.id} />
-              </Grid.Row>
-
-              <Grid.Row>
-                <Link to="/addArtist">
-                  <Header.Subheader>The track content is wrong, click to edit</Header.Subheader>
-                </Link>
+                <ArtistInfo query={this.state.query} artistId={this.state.id} loading={this.state.loading}/>
               </Grid.Row>
             </Grid.Column>
 
-            <Grid.Column width={1}>
-
-            </Grid.Column>
-
-            <Grid.Column width={10}>
+            <Grid.Column width={10} floated='right'>
               <Header as='h1' dividing>All results</Header>
-              <RecommendedArtists query={this.state.query} data={this.state.artistTracksData} loading={this.state.loading}/>
+              <MoreOfArtist query={this.state.query} data={this.state.artistTracksData} loading={this.state.loading}/>
             </Grid.Column>
 
           </Grid>
         </Container>
-
-      </div>
+        <Footer/>
+      </Container>
     )
   }
 }

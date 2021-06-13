@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Form, Menu } from 'semantic-ui-react'
+import {Container, Form, Menu} from 'semantic-ui-react'
 
 class MenuBar extends React.Component {
 
@@ -18,14 +18,14 @@ class MenuBar extends React.Component {
     window.location.href = '../search?q=' + this.state.query;
   }
 
-  handleInputChange = (e) => {
+  handleInputChange = (event) => {
     this.setState({
-      query: e.target.value,
+      query: event.target.value,
     });
   }
 
   render() {
-    return(
+    return (
       <Menu fixed={'top'} borderless={true}>
         <Container>
 
