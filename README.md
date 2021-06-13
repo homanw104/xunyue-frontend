@@ -10,15 +10,29 @@ repository [xunyue-backend](https://github.com/homanw104/xunyue-backend).
 ## Features
 
 * 主界面，引导用户搜索
+  
+![img_0.png](assets/img_0.png)
 
 * 搜索结果界面，包括**有限个**热门度最高的歌曲和歌手，以及一个最热门的歌手或歌曲，
   点击其中任意一个可以进入详情页面
+  
+![img_1.png](assets/img_1.png)
 
+* 如果没有结果，提示用户添加信息
+  
+![img_2.png](assets/img_2.png)
+  
 * 艺人详情，显示同一个艺人的所有歌曲
+
+![img_3.png](assets/img_3.png)
 
 * 歌曲详情，显示歌曲详情与其它相关的歌曲
 
+![img_4.png](assets/img_4.png)
+
 * 添加、修改、删除歌曲信息界面
+
+![img_5.png](assets/img_5.png)
 
 
 ## Install Dependencies
